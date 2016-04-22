@@ -1,0 +1,4 @@
+#N canvas 383 196 153 95 10;
+#X obj 16 46 dac~ \$1;
+#X obj 16 16 catch~ out\$1;
+#X connect 1 0 0 0;
