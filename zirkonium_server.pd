@@ -1,5 +1,5 @@
 #N canvas 160 96 429 191 10;
-#N canvas 351 23 807 424 command_interpretation 0;
+#N canvas 351 23 689 376 command_interpretation 0;
 #X obj 131 6 inlet;
 #N canvas 324 117 272 250 PropertiesOfAudioFile 0;
 #X obj 29 39 inlet;
@@ -304,6 +304,7 @@ SampleRate ID Speaker SpeakerDef vbapMapping hrtf Report SoundFile
 ;
 #X obj 439 287 s SoundFile;
 #X obj 471 130 print error-invalidCommand;
+#X text 80 306 distributes commands from the Trajectory Editor;
 #X connect 0 0 13 0;
 #X connect 13 0 1 0;
 #X connect 13 1 2 0;
@@ -338,7 +339,7 @@ SampleRate ID Speaker SpeakerDef vbapMapping hrtf Report SoundFile
 #X text 181 95 ID (sound object) layer;
 #X text 181 144 Hardware output layer;
 #X text 182 119 Virtual speaker layer;
-#N canvas 556 226 350 211 sfplayers 0;
+#N canvas 155 313 730 211 sfplayers 0;
 #X obj 17 12 sfplayer 0;
 #X obj 17 34 sfplayer 1;
 #X obj 17 56 sfplayer 2;
@@ -371,8 +372,12 @@ SampleRate ID Speaker SpeakerDef vbapMapping hrtf Report SoundFile
 #X obj 247 122 sfplayer 29;
 #X obj 247 144 sfplayer 30;
 #X obj 247 166 sfplayer 31;
+#X text 338 28 sound file players;
+#X text 336 85 you can play upto 32 files at the same time Audiot signal
+from the sound file will be sent to "receive~ playerID channelID".
+Note \, channel ID starts from 1 playerID starts from 0;
 #X restore 93 69 pd sfplayers;
-#N canvas 271 352 789 314 inputs 1;
+#N canvas 271 352 789 314 inputs 0;
 #X obj 73 74 send~ in1;
 #X obj 89 95 send~ in2;
 #X obj 74 13 send~ noinput;
@@ -409,6 +414,8 @@ SampleRate ID Speaker SpeakerDef vbapMapping hrtf Report SoundFile
 #X obj 623 187 send~ in30;
 #X obj 646 208 send~ in31;
 #X obj 666 227 send~ in32;
+#X text 65 267 input from the hardware. Max 32 channels. You can find
+receive~ in ID;
 #X connect 17 0 0 0;
 #X connect 17 1 1 0;
 #X connect 17 2 3 0;
@@ -442,7 +449,7 @@ SampleRate ID Speaker SpeakerDef vbapMapping hrtf Report SoundFile
 #X connect 18 14 33 0;
 #X connect 18 15 34 0;
 #X restore 28 70 pd inputs;
-#N canvas 526 228 440 234 Hardware_out 0;
+#N canvas 159 321 440 234 Hardware_out 0;
 #X obj 17 42 hout 1;
 #X obj 63 42 hout 2;
 #X obj 113 42 hout 3;
@@ -509,7 +516,7 @@ SampleRate ID Speaker SpeakerDef vbapMapping hrtf Report SoundFile
 #X obj 314 175 hout 63;
 #X obj 365 175 hout 64;
 #X restore 27 139 pd Hardware_out;
-#N canvas 43 234 715 232 Speakers 0;
+#N canvas 230 342 721 259 Speakers 0;
 #X obj 614 30 catch~ out0;
 #X obj 312 34 speaker 5;
 #X obj 84 35 speaker 2;
@@ -574,9 +581,12 @@ SampleRate ID Speaker SpeakerDef vbapMapping hrtf Report SoundFile
 #X obj 540 115 speaker 40;
 #X obj 540 135 speaker 48;
 #X obj 540 175 speaker 64;
-#X obj 539 154 speaker 56, f 12;
+#X obj 539 154 speaker 56;
+#X text 1 200 represent speaker. The connection of speaker and hardware
+out can be configurable. Thus the numbers above are NOT hardware out
+channels.;
 #X restore 27 114 pd Speakers;
-#N canvas 265 428 344 150 IDs 0;
+#N canvas 265 428 379 208 IDs 0;
 #N canvas 288 241 727 458 testID 0;
 #X obj 478 163 switch~;
 #X obj 478 118 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
@@ -712,6 +722,7 @@ SampleRate ID Speaker SpeakerDef vbapMapping hrtf Report SoundFile
 #X obj 202 80 ID 30;
 #X obj 237 80 ID 31;
 #X obj 272 80 ID 32;
+#X text 30 139 represents each ID (sound object);
 #X restore 27 91 pd IDs;
 #X connect 2 0 0 0;
 #X connect 3 0 5 0;
