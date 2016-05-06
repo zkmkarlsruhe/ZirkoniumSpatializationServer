@@ -18,3 +18,4 @@ In order to realize VBAP (Vector-based amplitude panning) the software employs a
 ### Contribution
 
 If you find a bug, please file it as an issue.
+
