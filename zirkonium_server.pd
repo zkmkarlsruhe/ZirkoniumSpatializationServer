@@ -1,4 +1,4 @@
-#N canvas 160 96 429 191 10;
+#N canvas 544 154 429 191 10;
 #N canvas 351 23 689 376 command_interpretation 0;
 #X obj 131 6 inlet;
 #N canvas 324 117 272 250 PropertiesOfAudioFile 0;
@@ -586,7 +586,7 @@ receive~ in ID;
 out can be configurable. Thus the numbers above are NOT hardware out
 channels.;
 #X restore 27 114 pd Speakers;
-#N canvas 265 428 379 208 IDs 0;
+#N canvas 265 428 379 208 IDs 1;
 #N canvas 288 241 727 458 testID 0;
 #X obj 478 163 switch~;
 #X obj 478 118 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
@@ -691,6 +691,7 @@ channels.;
 #X connect 28 1 27 0;
 #X restore 249 103 pd testID;
 #X obj 26 24 ID 1;
+#X text 30 139 represents each ID (sound object);
 #X obj 237 24 ID 7;
 #X obj 96 42 ID 11;
 #X obj 61 24 ID 2;
@@ -722,7 +723,6 @@ channels.;
 #X obj 202 80 ID 30;
 #X obj 237 80 ID 31;
 #X obj 272 80 ID 32;
-#X text 30 139 represents each ID (sound object);
 #X restore 27 91 pd IDs;
 #X connect 2 0 0 0;
 #X connect 3 0 5 0;

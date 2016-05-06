@@ -10,7 +10,7 @@
 #X obj 372 362 symbol;
 #X obj 212 313 == 0;
 #X msg 181 284 0;
-#X obj 374 655 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X obj 374 655 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X msg 372 447 1;
 #X msg 515 449 1;
@@ -22,7 +22,7 @@
 #X obj 44 337 list trim;
 #X obj 44 364 throw~ out0;
 #X obj 427 256 s \$1_oscAddress;
-#X obj 519 648 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X obj 519 648 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X obj 239 134 s \$1_span;
 #X obj 349 540 r \$1_span;
