@@ -1,7 +1,7 @@
 
 
 
-pd_darwin: vbap.pd_darwin define_loudspeakers.pd_darwin
+pd_darwin: zirkvbap.pd_darwin define_loudspeakers.pd_darwin
 .SUFFIXES: .pd_darwin
 
 DARWINCFLAGS = -DPD -O2 -Wall -W -Wshadow -Wstrict-prototypes \

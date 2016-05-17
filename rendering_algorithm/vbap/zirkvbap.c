@@ -1,36 +1,39 @@
-/* vbap.c
+/* zirkvbap.c
 
-written by Ville Pulkki 1999-2003
+modified by Chikashi Miyama 2015 
+ZKM IMA Karlsruhe Germany
+ 
+based on by Ville Pulkki 1999-2003
 Helsinki University of Technology 
 and 
 University of California at Berkeley 
 
 See copyright in file with name LICENSE.txt  */
 
-// Indicate that we are within VBAP object (specific to include define_loudspeakers content within vbap)
+// Indicate that we are within VBAP object (specific to include define_loudspeakers content within zirkvbap)
 #define VBAP_OBJECT
 
-#include "vbap.h"
+#include "zirkvbap.h"
 #include "s_stuff.h"
 
 // Function prototypes
-static void new_spread_dir(t_vbap *x, t_float spreaddir[3], t_float vscartdir[3], t_float spread_base[3]);
-static void new_spread_base(t_vbap *x, t_float spreaddir[3], t_float vscartdir[3]);
-static void *vbap_class;				
+static void new_spread_dir(t_zirkvbap *x, t_float spreaddir[3], t_float vscartdir[3], t_float spread_base[3]);
+static void new_spread_base(t_zirkvbap *x, t_float spreaddir[3], t_float vscartdir[3]);
+static void *zirkvbap_class;				
 static void vect_cross_prod(t_float v1[3], t_float v2[3],t_float v3[3]);
-static void additive_vbap(t_float *final_gs, t_float cartdir[3], t_vbap *x);
-static void vbap_bang(t_vbap *x);
-static void vbap_matrix(t_vbap *x, Symbol *s, int ac, Atom *av);
+static void additive_zirkvbap(t_float *final_gs, t_float cartdir[3], t_zirkvbap *x);
+static void zirkvbap_bang(t_zirkvbap *x);
+static void zirkvbap_matrix(t_zirkvbap *x, Symbol *s, int ac, Atom *av);
 #ifndef PD /* Max */
 /* these are for getting data from a cold inlet on Max/MSP, in Pd you use t_floatinlet_new() in new() */
-void vbap_ft1(t_vbap *x, double n);
-void vbap_ft2(t_vbap *x, double n);
-void vbap_in3(t_vbap *x, long n);
-void vbap_ft4(t_vbap *x, double g);
+void zirkvbap_ft1(t_zirkvbap *x, double n);
+void zirkvbap_ft2(t_zirkvbap *x, double n);
+void zirkvbap_in3(t_zirkvbap *x, long n);
+void zirkvbap_ft4(t_zirkvbap *x, double g);
 #endif
-static void spread_it(t_vbap *x, t_float *final_gs);
-static void *vbap_new(t_float azi, t_float ele, t_float spread);
-static void vbap(t_float g[3], long ls[3], t_vbap *x);
+static void spread_it(t_zirkvbap *x, t_float *final_gs);
+static void *zirkvbap_new(t_float azi, t_float ele, t_float spread);
+static void zirkvbap(t_float g[3], long ls[3], t_zirkvbap *x);
 static void angle_to_cart(t_float azi, t_float ele, t_float res[3]);
 static void cart_to_angle(t_float cvec[3], t_float avec[3]);
 
@@ -43,14 +46,14 @@ static void cart_to_angle(t_float cvec[3], t_float avec[3]);
 	 Max Object Assist
 ******************************************************/
 #ifndef PD /* Max */
-void vbap_assist(t_vbap *x, void *b, long m, long a, char *s)
+void zirkvbap_assist(t_zirkvbap *x, void *b, long m, long a, char *s)
 {
 	char*mess = "unknown";
 	if (m == ASSIST_INLET)
 	{
 		switch(a)
 		{
-			case 0 : mess = "bang to calc and output vbap gains. loudspeakers definition"; break;
+			case 0 : mess = "bang to calc and output zirkvbap gains. loudspeakers definition"; break;
 			case 1 : mess = "panning angle azimuth"; break;
 			case 2 : mess = "panning angle elevation"; break;
 			case 3 : mess = "spread amount"; break;
@@ -61,7 +64,7 @@ void vbap_assist(t_vbap *x, void *b, long m, long a, char *s)
 	{
 		switch(a)
 		{
-			case 0 : mess = "vbap gains"; break;
+			case 0 : mess = "zirkvbap gains"; break;
 			case 1 : mess = "panning angle azimuth"; break;
 			case 2 : mess = "panning angle elevation"; break;
 			case 3 : mess = "spread amount"; break;
@@ -75,49 +78,49 @@ void vbap_assist(t_vbap *x, void *b, long m, long a, char *s)
 /* above are the prototypes for the methods/procedures/functions you will use */
 /*--------------------------------------------------------------------------*/
 #ifdef PD
-void vbap_setup(void)
+void zirkvbap_setup(void)
 {
-	vbap_class = class_new(gensym("vbap"), (t_newmethod)vbap_new, 0, (short)sizeof(t_vbap), 0, 
+	zirkvbap_class = class_new(gensym("zirkvbap"), (t_newmethod)zirkvbap_new, 0, (short)sizeof(t_zirkvbap), 0, 
                            A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0); 
 
-	class_addbang(vbap_class, (t_method)vbap_bang);	
+	class_addbang(zirkvbap_class, (t_method)zirkvbap_bang);	
 /* these are for getting data from a cold inlet on Max/MSP, in Pd you use floatinlet_new() in new()
-	addftx((t_method)vbap_ft1, 1);
-	addftx((t_method)vbap_ft2, 2);
-	addftx((t_method)vbap_in3, 3);
-	addftx((t_method)vbap_ft4, 4);
+	addftx((t_method)zirkvbap_ft1, 1);
+	addftx((t_method)zirkvbap_ft2, 2);
+	addftx((t_method)zirkvbap_in3, 3);
+	addftx((t_method)zirkvbap_ft4, 4);
 */
-	class_addmethod(vbap_class, (t_method)vbap_matrix, gensym("loudspeaker-matrices"), A_GIMME, 0);
+	class_addmethod(zirkvbap_class, (t_method)zirkvbap_matrix, gensym("loudspeaker-matrices"), A_GIMME, 0);
 
 	// define_loudspeaker messages
-    class_addmethod(vbap_class, (t_method)vbap_def_ls, gensym("define-loudspeakers"), A_GIMME, 0);
-    class_addmethod(vbap_class, (t_method)vbap_def_ls, gensym("define_loudspeakers"), A_GIMME, 0);
-    class_addmethod(vbap_class, (t_method)def_ls_read_directions, gensym("ls-directions"), A_GIMME, 0);	
-    class_addmethod(vbap_class, (t_method)def_ls_read_triplets, gensym("ls-triplets"), A_GIMME, 0);
+    class_addmethod(zirkvbap_class, (t_method)vbap_def_ls, gensym("define-loudspeakers"), A_GIMME, 0);
+    class_addmethod(zirkvbap_class, (t_method)vbap_def_ls, gensym("define_loudspeakers"), A_GIMME, 0);
+    class_addmethod(zirkvbap_class, (t_method)def_ls_read_directions, gensym("ls-directions"), A_GIMME, 0);	
+    class_addmethod(zirkvbap_class, (t_method)def_ls_read_triplets, gensym("ls-triplets"), A_GIMME, 0);
 
 	logpost(NULL, 4, VBAP_VERSION);
 }
 #else /* MAX */
 void main(void)
 {
-	setup((t_messlist **)&vbap_class, (method)vbap_new, 0L, (short)sizeof(t_vbap), 0L, 
+	setup((t_messlist **)&zirkvbap_class, (method)zirkvbap_new, 0L, (short)sizeof(t_zirkvbap), 0L, 
           A_DEFLONG,A_DEFLONG,A_DEFLONG, 0); 
 
-	addbang((method)vbap_bang);	
-	addftx((method)vbap_ft1, 1);
-	addftx((method)vbap_ft2, 2);
-	addftx((method)vbap_in3, 3);
-	addftx((method)vbap_ft4, 4);
-	addmess((method)vbap_matrix, "loudspeaker-matrices", A_GIMME, 0);
+	addbang((method)zirkvbap_bang);	
+	addftx((method)zirkvbap_ft1, 1);
+	addftx((method)zirkvbap_ft2, 2);
+	addftx((method)zirkvbap_in3, 3);
+	addftx((method)zirkvbap_ft4, 4);
+	addmess((method)zirkvbap_matrix, "loudspeaker-matrices", A_GIMME, 0);
 	addmess((method)traces, "enabletrace", A_LONG, 0);
 
 	// define_loudspeaker messages
-	addmess((method)vbap_def_ls, "define-loudspeakers", A_GIMME, 0);
-	addmess((method)vbap_def_ls, "define_loudspeakers", A_GIMME, 0);
+	addmess((method)zirkvbap_def_ls, "define-loudspeakers", A_GIMME, 0);
+	addmess((method)zirkvbap_def_ls, "define_loudspeakers", A_GIMME, 0);
 	addmess((method)def_ls_read_directions, "ls-directions", A_GIMME, 0);	
 	addmess((method)def_ls_read_triplets, "ls-triplets", A_GIMME, 0);
 
-	addmess((method)vbap_assist,"assist",A_CANT,0);
+	addmess((method)zirkvbap_assist,"assist",A_CANT,0);
 
 	post(VBAP_VERSION);
 }
@@ -125,24 +128,24 @@ void main(void)
 /* these are for getting data from a cold inlet on Max/MSP, in Pd you use floatinlet_new() in new() */
 /*--------------------------------------------------------------------------*/
 // panning angle azimuth
-void vbap_ft1(t_vbap *x, double n) { x->x_azi = (float) n; }
+void zirkvbap_ft1(t_zirkvbap *x, double n) { x->x_azi = (float) n; }
 /*--------------------------------------------------------------------------*/
 // panning angle elevation
-void vbap_ft2(t_vbap *x, double n) { x->x_ele = (float) n; }
+void zirkvbap_ft2(t_zirkvbap *x, double n) { x->x_ele = (float) n; }
 /*--------------------------------------------------------------------------*/
 // spread amount
-void vbap_in3(t_vbap *x, long n) { x->x_spread = (n<0) ? 0 : (n>100) ? 100 : n; }
+void zirkvbap_in3(t_zirkvbap *x, long n) { x->x_spread = (n<0) ? 0 : (n>100) ? 100 : n; }
 /*--------------------------------------------------------------------------*/
 // gain control
-void vbap_ft4(t_vbap *x, double g) { x->x_gain = g; }
+void zirkvbap_ft4(t_zirkvbap *x, double g) { x->x_gain = g; }
 #endif /* MAX */
 
 /*--------------------------------------------------------------------------*/
 // create new instance of object... 
-static void *vbap_new(t_float azi, t_float ele, t_float spread)
+static void *zirkvbap_new(t_float azi, t_float ele, t_float spread)
 {
 #ifdef PD
-	t_vbap *x = (t_vbap *)newobject(vbap_class);
+	t_zirkvbap *x = (t_zirkvbap *)newobject(zirkvbap_class);
 
 	floatinlet_new(&x->x_obj, &x->x_azi);
 	floatinlet_new(&x->x_obj, &x->x_ele);
@@ -154,7 +157,7 @@ static void *vbap_new(t_float azi, t_float ele, t_float spread)
 	x->x_outlet3 = outlet_new(&x->x_obj, &s_float);
   x->x_outlet4 = outlet_new(&x->x_obj, 0);
 #else /* Max */
-	t_vbap *x = (t_vbap *)newobject(vbap_class);
+	t_zirkvbap *x = (t_zirkvbap *)newobject(zirkvbap_class);
 
 	floatin(x,4);	
 	floatin(x,3);	
@@ -224,7 +227,7 @@ static void cart_to_angle(t_float cvec[3], t_float avec[3])
 }
 
 
-static void vbap(t_float g[3], long ls[3], t_vbap *x)
+static void zirkvbap(t_float g[3], long ls[3], t_zirkvbap *x)
 {
   /* calculates gain factors using loudspeaker setup and given direction */
   t_float power;
@@ -336,7 +339,7 @@ static void vbap(t_float g[3], long ls[3], t_vbap *x)
  	 	cart_to_angle(new_cartdir,new_angle_dir);
     float tmp = x->x_azi;
  	 	x->x_azi = (new_angle_dir[0] );
-		//post("[vbap] use azimuth %g insted of %g",x->x_azi , tmp);
+		//post("[zirkvbap] use azimuth %g insted of %g",x->x_azi , tmp);
  	 	x->x_ele = (new_angle_dir[1]);
  	 }
   //}
@@ -363,7 +366,7 @@ static void vect_cross_prod(t_float v1[3], t_float v2[3],
   v3[2] /= length;
 }
 
-static void additive_vbap(t_float *final_gs, t_float cartdir[3], t_vbap *x)
+static void additive_zirkvbap(t_float *final_gs, t_float cartdir[3], t_zirkvbap *x)
 // calculates gains to be added to previous gains, used in
 // multiple direction panning (source spreading)
 {
@@ -430,7 +433,7 @@ static void additive_vbap(t_float *final_gs, t_float cartdir[3], t_vbap *x)
 }
 
 
-static void new_spread_dir(t_vbap *x, t_float spreaddir[3], t_float vscartdir[3], t_float spread_base[3])
+static void new_spread_dir(t_zirkvbap *x, t_float spreaddir[3], t_float vscartdir[3], t_float spread_base[3])
 // subroutine for spreading
 {
 	t_float beta,gamma;
@@ -460,7 +463,7 @@ static void new_spread_dir(t_vbap *x, t_float spreaddir[3], t_float vscartdir[3]
   	spreaddir[2] /= power;
 }
 
-static void new_spread_base(t_vbap *x, t_float spreaddir[3], t_float vscartdir[3])
+static void new_spread_base(t_zirkvbap *x, t_float spreaddir[3], t_float vscartdir[3])
 // subroutine for spreading
 {
 	t_float d;
@@ -477,7 +480,7 @@ static void new_spread_base(t_vbap *x, t_float spreaddir[3], t_float vscartdir[3
   	x->x_spread_base[2] /= power;
 }
 
-static void spread_it(t_vbap *x, t_float *final_gs)
+static void spread_it(t_zirkvbap *x, t_float *final_gs)
 // apply the sound signal to multiple panning directions
 // that causes some spreading.
 // See theory in paper V. Pulkki "Uniform spreading of amplitude panned
@@ -516,10 +519,10 @@ static void spread_it(t_vbap *x, t_float *final_gs)
 		for(i=0;i<3;i++) spreadbase[14][i] =  (vscartdir[i] + spreadbase[10][i]) / 2.0;
 		for(i=0;i<3;i++) spreadbase[15][i] =  (vscartdir[i] + spreadbase[11][i]) / 2.0;
 		
-		additive_vbap(final_gs,spreaddir[0],x); 
+		additive_zirkvbap(final_gs,spreaddir[0],x); 
 		for(i=1;i<spreaddirnum;i++){
 			new_spread_dir(x, spreaddir[i], vscartdir, spreadbase[i]);
-			additive_vbap(final_gs,spreaddir[i],x); 
+			additive_zirkvbap(final_gs,spreaddir[i],x); 
 		}
 	} else if (x->x_dimension == 2) {
 		spreaddirnum=6;		
@@ -532,7 +535,7 @@ static void spread_it(t_vbap *x, t_float *final_gs)
 		angle_to_cart(x->x_azi + x->x_spread, 0, spreaddir[5]);
 		
 		for(i=0;i<spreaddirnum;i++)
-			additive_vbap(final_gs,spreaddir[i],x); 
+			additive_zirkvbap(final_gs,spreaddir[i],x); 
 	} else
 		return;
 		
@@ -552,8 +555,8 @@ static void spread_it(t_vbap *x, t_float *final_gs)
 }	
 	
 
-static void vbap_bang(t_vbap *x)			
-// top level, vbap gains are calculated and outputted	
+static void zirkvbap_bang(t_zirkvbap *x)			
+// top level, zirkvbap gains are calculated and outputted	
 {
 	Atom at[MAX_LS_AMOUNT]; 
 	t_float g[3];
@@ -561,9 +564,11 @@ static void vbap_bang(t_vbap *x)
 	long i;
 	t_float *final_gs = (t_float *) getbytes(x->x_ls_amount * sizeof(t_float));
 
+    if(x->x_spread < 0.00001f){x->x_spread = 0.0f;} // in order to avoid explosion (nan)
+    
 	if(x->x_lsset_available ==1)
 	{
-		vbap(g,ls, x);
+		zirkvbap(g,ls, x);
 		for(i=0;i<x->x_ls_amount;i++)
 			final_gs[i]=0.0; 			
 		for(i=0;i<x->x_dimension;i++)
@@ -592,14 +597,14 @@ static void vbap_bang(t_vbap *x)
 		//outlet_int(x->x_outlet4, x->x_gain); 
 	}
 	else
-		error("vbap: Configure loudspeakers first!");
+		error("zirkvbap: Configure loudspeakers first!");
 
 	freebytes(final_gs, x->x_ls_amount * sizeof(t_float)); // bug fix added 9/00
 }
 
 /*--------------------------------------------------------------------------*/
 
-static void vbap_matrix(t_vbap *x, Symbol *s, int ac, Atom *av)
+static void zirkvbap_matrix(t_zirkvbap *x, Symbol *s, int ac, Atom *av)
 // read in loudspeaker matrices
 {
 	int datapointer = 0; 
@@ -608,21 +613,21 @@ static void vbap_matrix(t_vbap *x, Symbol *s, int ac, Atom *av)
 		int d = 0;
  		/*if(av[datapointer].a_type == A_LONG) d = av[datapointer++].a_w.w_long;
 		else*/ if(av[datapointer].a_type == A_FLOAT) d = (long)av[datapointer++].a_w.w_float;
-		else { error("vbap: Dimension NaN"); x->x_lsset_available=0; return; }
+		else { error("zirkvbap: Dimension NaN"); x->x_lsset_available=0; return; }
 
-		if (d!=2 && d!=3) { error("vbap %s: Dimension can be only 2 or 3",s->s_name); x->x_lsset_available=0; return; }
+		if (d!=2 && d!=3) { error("zirkvbap %s: Dimension can be only 2 or 3",s->s_name); x->x_lsset_available=0; return; }
 
 		x->x_dimension = d;
 		x->x_lsset_available=1;
 	}
- 	else { error("vbap %s: bad empty parameter list",s->s_name); x->x_lsset_available=0; return; }
+ 	else { error("zirkvbap %s: bad empty parameter list",s->s_name); x->x_lsset_available=0; return; }
 
 	if(ac>1) 
 	{
 		long a = 0;
  		/*if(av[datapointer].a_type == A_LONG) a = av[datapointer++].a_w.w_long;
 		else*/ if(av[datapointer].a_type == A_FLOAT) a = (long) av[datapointer++].a_w.w_float;
-		else { error("vbap: ls_amount NaN");  x->x_lsset_available=0; return; }
+		else { error("zirkvbap: ls_amount NaN");  x->x_lsset_available=0; return; }
 
 		x->x_ls_amount = a;
 	}
@@ -630,7 +635,7 @@ static void vbap_matrix(t_vbap *x, Symbol *s, int ac, Atom *av)
 	long counter = (ac - 2) / ((x->x_dimension * x->x_dimension*2) + x->x_dimension);
  	x->x_lsset_amount=counter;
 
- 	if(counter==0) { error("vbap %s: not enough parameters",s->s_name); x->x_lsset_available=0; return; }
+ 	if(counter==0) { error("zirkvbap %s: not enough parameters",s->s_name); x->x_lsset_available=0; return; }
  	
 	long setpointer=0;
 	long i;
@@ -644,13 +649,13 @@ static void vbap_matrix(t_vbap *x, Symbol *s, int ac, Atom *av)
 			{
                 x->x_lsset[setpointer][i]=(long)av[datapointer++].a_w.w_float;
  			}
- 			else { error("vbap %s: param %d is not a float",s->s_name,datapointer); x->x_lsset_available=0; return; }
+ 			else { error("zirkvbap %s: param %d is not a float",s->s_name,datapointer); x->x_lsset_available=0; return; }
 # else /* Max */
  			if(av[datapointer].a_type == A_LONG)
 			{
  				 x->x_lsset[setpointer][i]=av[datapointer++].a_w.w_long;
  			}
- 			else { error("vbap %s: param %d is not an in",s->s_name,datapointer); x->x_lsset_available=0; return; }
+ 			else { error("zirkvbap %s: param %d is not an in",s->s_name,datapointer); x->x_lsset_available=0; return; }
 # endif /* PD */
  		}	
  		for(i=0; i < x->x_dimension*x->x_dimension; i++)
@@ -659,7 +664,7 @@ static void vbap_matrix(t_vbap *x, Symbol *s, int ac, Atom *av)
 			{
  				x->x_set_inv_matx[setpointer][i]=av[datapointer++].a_w.w_float;
  			}
- 			else { error("vbap %s: param %d is not a float",s->s_name,datapointer); x->x_lsset_available=0; return; }
+ 			else { error("zirkvbap %s: param %d is not a float",s->s_name,datapointer); x->x_lsset_available=0; return; }
  		}
  		
  		for(i=0; i < x->x_dimension*x->x_dimension; i++)
@@ -668,7 +673,7 @@ static void vbap_matrix(t_vbap *x, Symbol *s, int ac, Atom *av)
 			{
  				x->x_set_matx[setpointer][i]=av[datapointer++].a_w.w_float;
  			}
- 			else { error("vbap %s: param %d is not a float",s->s_name,datapointer); x->x_lsset_available=0; return; }
+ 			else { error("zirkvbap %s: param %d is not a float",s->s_name,datapointer); x->x_lsset_available=0; return; }
  			
  		}
    	t_atom atoms[3];
@@ -681,6 +686,6 @@ static void vbap_matrix(t_vbap *x, Symbol *s, int ac, Atom *av)
 
  		setpointer++;
 	}
-	if (_enable_trace) post("vbap: Loudspeaker setup configured!");
+	if (_enable_trace) post("zirkvbap: Loudspeaker setup configured!");
 
   }

@@ -52,7 +52,7 @@ typedef struct t_ls_set
 } t_ls_set;
 
 #ifdef VBAP_OBJECT
-	typedef struct vbap				/* This defines the object as an entity made up of other things */
+	typedef struct zirkvbap				/* This defines the object as an entity made up of other things */
 	{
 		t_object x_obj;				
 		t_float x_azi; 	// panning direction azimuth
@@ -85,10 +85,10 @@ typedef struct t_ls_set
 		long x_def_ls_amount;				// number of loudspeakers
 		long x_def_ls_dimension;		// 2 (horizontal arrays) or 3 (3d setups)
 		long x_previous_winner_set;
-	} t_vbap;
+	} t_zirkvbap;
 
 	// define loudspeaker data type...
-	typedef t_vbap t_def_ls;
+	typedef t_zirkvbap t_def_ls;
 #else
 	/* define_loudspeakers maxmsp object */
 	typedef struct 				

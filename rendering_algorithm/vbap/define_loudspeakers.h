@@ -7,7 +7,7 @@ Unversity of California at Berkeley
 
 See copyright in file with name LICENSE.txt  */
 
-#include "vbap.h"
+#include "zirkvbap.h"
 
 static t_class *def_ls_class;				/* so max can identify your object */
 static void def_ls_bang(t_def_ls *x);
