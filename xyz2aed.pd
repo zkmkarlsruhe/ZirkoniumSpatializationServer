@@ -1,8 +1,8 @@
-#N canvas 265 129 345 519 10;
+#N canvas 892 231 353 579 10;
 #X obj 81 59 inlet;
-#X obj 78 475 outlet;
+#X obj 80 533 outlet;
 #X obj 81 105 unpack 0 0 0;
-#X obj 78 447 pack 0 0 0;
+#X obj 80 505 pack 0 0 0;
 #X obj 219 211 *;
 #X obj 184 211 *;
 #X obj 150 211 *;
@@ -18,8 +18,9 @@
 #X obj 107 316 t b f;
 #X obj 79 259 * 57.2958;
 #X obj 79 282 circlewrap;
-#X obj 106 397 * 57.2958;
-#X obj 106 420 circlewrap;
+#X text 175 93 x y z;
+#X obj 107 397 expr (1.5708 - acos($f1)) * 57.2958;
+#X obj 108 478 circlewrap;
 #X connect 0 0 2 0;
 #X connect 2 0 11 0;
 #X connect 2 1 12 0;
@@ -39,7 +40,7 @@
 #X connect 12 0 10 1;
 #X connect 12 1 5 0;
 #X connect 12 2 5 1;
-#X connect 13 0 19 0;
+#X connect 13 0 20 0;
 #X connect 14 0 4 0;
 #X connect 14 1 4 1;
 #X connect 14 2 15 1;
@@ -48,5 +49,5 @@
 #X connect 16 1 13 1;
 #X connect 17 0 18 0;
 #X connect 18 0 3 0;
-#X connect 19 0 20 0;
-#X connect 20 0 3 1;
+#X connect 20 0 21 0;
+#X connect 21 0 3 1;
