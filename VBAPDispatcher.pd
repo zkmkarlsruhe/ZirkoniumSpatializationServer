@@ -1,19 +1,21 @@
-#N canvas 472 314 375 173 10;
+#N canvas 179 403 475 173 10;
 #X obj 25 113 *~;
 #X obj 25 16 receive~ VBAPSource\$1, f 13;
 #X obj 25 141 throw~ speaker\$2;
 #X obj 130 17 r VBAPGain\$1;
 #X obj 130 42 route \$2;
 #X obj 130 65 pack 0 25;
-#X floatatom 225 37 5 0 0 0 - - -, f 5;
-#X obj 225 129 switch~;
-#X obj 225 100 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X floatatom 305 37 5 0 0 0 - - -, f 5;
+#X obj 305 129 switch~;
+#X obj 305 100 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
-#X obj 285 59 loadbang;
-#X msg 285 83 0;
-#X obj 225 15 r NumSpeakers;
-#X obj 225 61 >= \$2;
+#X obj 365 59 loadbang;
+#X msg 365 83 0;
+#X obj 305 15 r NumSpeakers;
+#X obj 305 61 >= \$2;
 #X obj 130 89 line~;
+#X obj 221 42 route \$2;
+#X obj 221 17 r VBAPRamp;
 #X connect 0 0 2 0;
 #X connect 1 0 0 0;
 #X connect 3 0 4 0;
@@ -26,3 +28,5 @@
 #X connect 11 0 6 0;
 #X connect 12 0 8 0;
 #X connect 13 0 0 1;
+#X connect 14 0 5 1;
+#X connect 15 0 14 0;

@@ -1,4 +1,8 @@
-#N canvas 383 196 153 95 10;
-#X obj 16 46 dac~ \$1;
-#X obj 16 16 catch~ out\$1;
-#X connect 1 0 0 0;
+#N canvas 383 196 192 177 10;
+#X obj 62 128 dac~ \$1;
+#X obj 62 38 catch~ out\$1;
+#X obj 62 95 *~ 1;
+#X obj 83 67 r MasterGain;
+#X connect 1 0 2 0;
+#X connect 2 0 0 0;
+#X connect 3 0 2 1;
