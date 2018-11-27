@@ -56,9 +56,20 @@ In order to realize VBAP (Vector-based amplitude panning) the software employs a
   - open _filepath_
   - play
   - stop
-* MasterGain _db_ (range?)
-* VBAPRamp _ramp ms_
+* input gain _dB_ (-100 to 12)
+* output gain _dB_ (-100 to 12)
+* vbap speed _speed ms_ 
 * Verbose _0 or 1_
+
+### Messaging
+
+* #zirk-in: server receive (input)
+* #zirk-out: server send (ouput)
+* internal sends:
+  - #zirk_input
+  - #zirk_output
+  - #zirk_vbap
+  - #zirk_speaker
 
 ### Contribution
 
