@@ -1,0 +1,47 @@
+#N canvas 527 107 617 394 10;
+#X obj 427 225 dac~;
+#X msg 152 245 stop;
+#X floatatom 286 291 5 -100 12 0 dB - -;
+#X floatatom 212 291 5 0 1 0 rms - -;
+#X text 181 215 <-- then play;
+#X obj 43 97 openpanel;
+#X obj 43 73 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X obj 43 148 symbol;
+#X text 335 314 gain;
+#X text 17 17 source sound file with 8 channel output \, wraps [readsf~]
+;
+#X text 117 104 >-- open first;
+#X obj 427 168 receive~ zirk_sf1-1;
+#X obj 448 192 receive~ zirk_sf1-2;
+#X obj 43 364 zirk_sourcefile 1;
+#X text 211 267 0 - 1;
+#X text 278 267 -100 - +12;
+#X text 416 121 receive using id & channel: zirk_sf#-#, f 28;
+#X text 40 43 creation args: id;
+#X msg 286 315 db \$1;
+#X msg 137 214 start;
+#X msg 43 172 open \$1;
+#X obj 131 148 symbol;
+#X obj 58 125 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X obj 131 125 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X text 224 173 optional sample offset;
+#X msg 131 172 open \$1 41000;
+#X connect 1 0 13 0;
+#X connect 2 0 18 0;
+#X connect 3 0 13 0;
+#X connect 5 0 7 0;
+#X connect 6 0 5 0;
+#X connect 7 0 20 0;
+#X connect 7 0 21 0;
+#X connect 11 0 0 0;
+#X connect 12 0 0 1;
+#X connect 18 0 13 0;
+#X connect 19 0 13 0;
+#X connect 20 0 13 0;
+#X connect 21 0 25 0;
+#X connect 22 0 7 0;
+#X connect 23 0 21 0;
+#X connect 25 0 13 0;

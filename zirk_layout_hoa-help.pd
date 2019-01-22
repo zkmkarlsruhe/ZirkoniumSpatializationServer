@@ -1,0 +1,25 @@
+#N canvas 571 116 405 401 10;
+#X msg 79 109 2 -45 45;
+#X msg 167 109 2 -45 45 135 -135;
+#X obj 79 186 print;
+#X obj 79 155 zirk_layout_hoa;
+#X text 20 24 convert a speaker layout list into the format needed
+by the zirk_hoa / hoa objects;
+#X text 20 60 use this to precompute the hoa order & speaker positions
+for all hoa objects;
+#X msg 80 273 2 -45 45;
+#X msg 168 273 2 -45 45 135 -135;
+#X obj 80 306 zirk_layout_hoa;
+#X obj 80 360 print;
+#X obj 208 360 zirkhoa;
+#X obj 103 333 route stereo count;
+#X text 23 225 note: filter out the "stereo" & "count" messages when
+sending to a [hoa] object directly:;
+#X connect 0 0 3 0;
+#X connect 1 0 3 0;
+#X connect 3 0 2 0;
+#X connect 6 0 8 0;
+#X connect 7 0 8 0;
+#X connect 8 0 9 0;
+#X connect 8 0 11 0;
+#X connect 11 2 10 0;

@@ -1,0 +1,57 @@
+#N canvas 415 215 506 497 10;
+#X obj 31 276 zirk_hrtf;
+#X msg 318 164 speed 25;
+#X msg 388 164 speed 100;
+#X obj 31 60 noise~;
+#X obj 31 87 *~ 0.1;
+#X obj 282 83 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+1;
+#X obj 282 60 loadbang;
+#X msg 282 105 on \$1;
+#X text 325 105 enable DSP;
+#X obj 282 231 t a;
+#X obj 56 235 pack 0 0 0;
+#X obj 78 205 t b f;
+#X obj 120 205 t b f;
+#X obj 59 147 hsl 64 15 -1 1 0 0 empty empty x -12 7 0 10 -262144 -1
+-1 3300 1;
+#X obj 81 165 hsl 64 15 -1 1 0 0 empty empty y -12 7 0 10 -262144 -1
+-1 5700 1;
+#X obj 95 183 hsl 64 15 -1 1 0 0 empty empty z -12 7 0 10 -262144 -1
+-1 1600 1;
+#X text 50 125 cartesian spherical pos -1 to 1;
+#X text 132 145 -1 left \, 1 right;
+#X text 156 164 -1 back \, 1 front;
+#X text 167 182 -1 bottom \, 1 top;
+#X text 313 137 gain interpolation speed ms;
+#X text 13 18 hrtf panner / simulation \, wraps [earplug~] & requires
+earplug external, f 70;
+#X text 54 319 receive via catch~ names: "zirk_hrtf1" & "zirk_hrtf2"
+;
+#X text 54 340 or use zirk_output_hrtf:;
+#X obj 149 455 zirk_output_hrtf;
+#X floatatom 220 399 5 -100 12 0 dB - -;
+#X floatatom 149 399 5 0 1 0 rms - -;
+#X text 267 423 gain;
+#X msg 220 423 db \$1;
+#X text 213 379 -100 - +12;
+#X text 148 378 0 - 1;
+#X connect 1 0 9 0;
+#X connect 2 0 9 0;
+#X connect 3 0 4 0;
+#X connect 4 0 0 0;
+#X connect 5 0 7 0;
+#X connect 6 0 5 0;
+#X connect 7 0 9 0;
+#X connect 9 0 0 2;
+#X connect 10 0 0 1;
+#X connect 11 0 10 0;
+#X connect 11 1 10 1;
+#X connect 12 0 10 0;
+#X connect 12 1 10 2;
+#X connect 13 0 10 0;
+#X connect 14 0 11 0;
+#X connect 15 0 12 0;
+#X connect 25 0 28 0;
+#X connect 26 0 24 0;
+#X connect 28 0 24 0;

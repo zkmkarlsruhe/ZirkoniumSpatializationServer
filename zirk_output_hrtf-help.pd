@@ -1,0 +1,44 @@
+#N canvas 978 120 604 382 10;
+#X obj 276 337 zirk_hrtf;
+#X obj 276 109 osc~ 440;
+#X obj 276 136 *~ 0.1;
+#X floatatom 122 112 5 -100 12 0 dB - -;
+#X floatatom 51 112 5 0 1 0 rms - -;
+#X text 169 136 gain;
+#X msg 122 136 db \$1;
+#X text 114 92 -100 - +12;
+#X text 52 91 0 - 1;
+#X text 19 17 stereo HRTF hardware output channels \, wraps [dac~]
+;
+#X obj 51 185 zirk_output_hrtf;
+#X text 273 66 send using zirk_hrtf:;
+#X obj 346 245 pack 0 0 0;
+#X obj 368 215 t b f;
+#X obj 410 215 t b f;
+#X obj 349 157 hsl 64 15 -1 1 0 0 empty empty x -12 7 0 10 -262144
+-1 -1 5500 1;
+#X obj 371 175 hsl 64 15 -1 1 0 0 empty empty y -12 7 0 10 -262144
+-1 -1 1500 1;
+#X obj 385 193 hsl 64 15 -1 1 0 0 empty empty z -12 7 0 10 -262144
+-1 -1 5200 1;
+#X text 340 135 cartesian spherical pos -1 to 1;
+#X text 422 155 -1 left \, 1 right;
+#X text 446 174 -1 back \, 1 front;
+#X text 457 192 -1 bottom \, 1 top;
+#X obj 415 278 loadbang;
+#X msg 415 306 on 1;
+#X connect 1 0 2 0;
+#X connect 2 0 0 0;
+#X connect 3 0 6 0;
+#X connect 4 0 10 0;
+#X connect 6 0 10 0;
+#X connect 12 0 0 1;
+#X connect 13 0 12 0;
+#X connect 13 1 12 1;
+#X connect 14 0 12 0;
+#X connect 14 1 12 2;
+#X connect 15 0 12 0;
+#X connect 16 0 13 0;
+#X connect 17 0 14 0;
+#X connect 22 0 23 0;
+#X connect 23 0 0 2;

@@ -1,0 +1,107 @@
+#N canvas 1009 55 620 681 10;
+#X floatatom 82 348 5 0 100 1 span - -;
+#X obj 339 98 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+1;
+#X obj 392 510 loadbang;
+#X obj 339 75 loadbang;
+#X obj 40 102 *~ 0.1;
+#X obj 40 74 noise~;
+#X obj 40 510 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+1;
+#X msg 40 534 all report level \$1;
+#X msg 411 283 2 -45 45 -135 135;
+#X obj 40 613 vsl 15 48 -100 12 0 0 empty empty empty 0 -9 0 10 -262144
+-1 -1 0 1;
+#X obj 40 560 clone -s 1 4 zirk_speaker;
+#X obj 392 560 clone -s 1 4 zirk_output;
+#X obj 58 613 vsl 15 48 -100 12 0 0 empty empty empty 0 -9 0 10 -262144
+-1 -1 0 1;
+#X obj 77 613 vsl 15 48 -100 12 0 0 empty empty empty 0 -9 0 10 -262144
+-1 -1 0 1;
+#X obj 96 613 vsl 15 48 -100 12 0 0 empty empty empty 0 -9 0 10 -262144
+-1 -1 0 1;
+#X obj 40 393 zirk_vbap 4;
+#X obj 61 246 pack 0 0 0;
+#X obj 83 216 t b f;
+#X obj 125 216 t b f;
+#X obj 64 158 hsl 64 15 -1 1 0 0 empty empty x -12 7 0 10 -262144 -1
+-1 0 1;
+#X obj 86 176 hsl 64 15 -1 1 0 0 empty empty y -12 7 0 10 -262144 -1
+-1 0 1;
+#X obj 100 194 hsl 64 15 -1 1 0 0 empty empty z -12 7 0 10 -262144
+-1 -1 0 1;
+#X msg 392 534 all db -6;
+#X obj 85 322 hsl 64 15 0 1 0 0 empty empty empty -12 7 0 10 -262144
+-1 -1 0 1;
+#X msg 339 120 on \$1;
+#X msg 394 248 2 -45 45;
+#X text 459 248 stereo;
+#X text 529 285 quad;
+#X text 55 136 cartesian spherical pos -1 to 1;
+#N canvas 467 176 388 209 speaker 0;
+#X obj 25 70 inlet;
+#X obj 25 154 outlet;
+#X text 137 99 <-- see help for more info;
+#X text 22 17 if there are many zirk_vbap / vbap objects \, use a single
+zirk_layout_vbap object to precompute the loudspeaker triplet positions
+;
+#X obj 25 99 zirk_layout_vbap;
+#X obj 118 153 print speaker set;
+#X text 137 129 print speaker pair/triplet sets;
+#X connect 0 0 4 0;
+#X connect 4 0 1 0;
+#X connect 4 1 5 0;
+#X restore 394 317 pd speaker layout;
+#X text 392 155 speaker positions;
+#X text 382 120 enable DSP;
+#X text 78 279 sound source virtual width;
+#X obj 339 358 t a;
+#X obj 40 486 loadbang;
+#X text 208 559 sends to 4 zirk_outputs ->;
+#X floatatom 40 429 5 0 0 1 set - -;
+#X text 131 393 v pans between 4 zirk_speakers v;
+#X obj 40 585 route 1 2 3 4;
+#X text 123 628 speaker db levels;
+#X text 18 13 vbap panner which sends to zirk_speakers \, wraps [vbap~]
+& requires vbap external, f 80;
+#X obj 394 217 loadbang;
+#X text 132 421 outputs currently selected speaker pair/triplet set
+(if num speakers > 2), f 42;
+#X text 80 298 0 - 1 speaker \, 1 - all speakers;
+#X text 137 156 -1 left \, 1 right;
+#X text 161 175 -1 back \, 1 front;
+#X text 172 193 -1 bottom \, 1 top;
+#X text 62 43 creation arg: speakercount;
+#X text 392 176 2D: 2 azimuth1 azimuth2 ...;
+#X text 392 193 3D: 3 azimuth1 elevation1 ...;
+#X connect 0 0 15 2;
+#X connect 1 0 24 0;
+#X connect 2 0 22 0;
+#X connect 3 0 1 0;
+#X connect 4 0 15 0;
+#X connect 5 0 4 0;
+#X connect 6 0 7 0;
+#X connect 7 0 10 0;
+#X connect 8 0 29 0;
+#X connect 10 0 38 0;
+#X connect 15 0 36 0;
+#X connect 16 0 15 1;
+#X connect 17 0 16 0;
+#X connect 17 1 16 1;
+#X connect 18 0 16 0;
+#X connect 18 1 16 2;
+#X connect 19 0 16 0;
+#X connect 20 0 17 0;
+#X connect 21 0 18 0;
+#X connect 22 0 11 0;
+#X connect 23 0 0 0;
+#X connect 24 0 33 0;
+#X connect 25 0 29 0;
+#X connect 29 0 33 0;
+#X connect 33 0 15 3;
+#X connect 34 0 6 0;
+#X connect 38 0 9 0;
+#X connect 38 1 12 0;
+#X connect 38 2 13 0;
+#X connect 38 3 14 0;
+#X connect 41 0 25 0;

@@ -1,0 +1,10 @@
+#N canvas 264 69 383 199 10;
+#X obj 60 114 zirk_layout_count;
+#X msg 60 76 2 -45 45;
+#X msg 136 76 2 -45 45 135 -135;
+#X floatatom 60 144 5 0 0 1 speakers - -;
+#X text 27 30 get the number of speaker from a speaker layout list
+;
+#X connect 0 0 3 0;
+#X connect 1 0 0 0;
+#X connect 2 0 0 0;

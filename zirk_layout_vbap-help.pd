@@ -1,0 +1,34 @@
+#N canvas 614 82 404 532 10;
+#X obj 79 155 zirk_layout_vbap;
+#X msg 79 109 2 -45 45;
+#X msg 167 109 2 -45 45 135 -135;
+#X text 20 24 convert a speaker layout list into the format needed
+by the zirk_vbap / vbap objects;
+#X obj 79 186 print;
+#X text 23 226 this is simply a wrapper for [define_loudspeakers];
+#X obj 78 287 define_loudspeakers 2 -45 45;
+#X text 263 288 <- see help;
+#X text 24 253 use can also use [define_loudspeakrs] directly;
+#X obj 172 186 print set;
+#X text 245 180 <- output speaker pair/triplet sets, f 18;
+#X text 20 60 use this to precompute the speaker pair/triplet sets
+for all vbap objects;
+#X msg 80 383 2 -45 45;
+#X msg 168 383 2 -45 45 135 -135;
+#X obj 80 470 print;
+#X obj 80 416 zirk_layout_vbap;
+#X obj 103 443 route count;
+#X obj 166 470 zirkvbap;
+#X obj 211 495 print vbap;
+#X text 23 335 note: filter out the "count" message when sending to
+a [vbap] object directly:;
+#X connect 0 0 4 0;
+#X connect 0 1 9 0;
+#X connect 1 0 0 0;
+#X connect 2 0 0 0;
+#X connect 12 0 15 0;
+#X connect 13 0 15 0;
+#X connect 15 0 14 0;
+#X connect 15 0 16 0;
+#X connect 16 1 17 0;
+#X connect 17 4 18 0;

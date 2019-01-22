@@ -1,11 +1,12 @@
-#N canvas 284 113 279 249 10;
+#N canvas 284 113 355 230 10;
 #X obj 76 13 inlet;
 #X obj 76 186 outlet;
 #X obj 76 42 moses 180;
-#X obj 127 87 - 360;
+#X obj 127 82 - 360;
 #X obj 19 81 moses -180;
 #X obj 19 118 + 360;
 #X text 127 5 wrap up \, unless 0 < degree < 360;
+#X text 161 43 keep range -180 to 180;
 #X connect 0 0 2 0;
 #X connect 2 0 4 0;
 #X connect 2 1 3 0;

@@ -1,0 +1,48 @@
+#N canvas 675 80 553 513 10;
+#X msg 166 268 speed \$1;
+#X msg 193 304 2;
+#X msg 229 304 4;
+#X msg 166 237 10;
+#X msg 201 237 25;
+#X obj 204 397 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X floatatom 139 174 5 -100 12 0 db - -;
+#X floatatom 116 148 5 0 1 0 rms - -;
+#X msg 139 198 db \$1;
+#X msg 193 353 max \$1;
+#X text 275 339 ie. you have 16 dispatchers but only 8 speakers \,
+so only the first 8 are active, f 38;
+#X text 233 236 gain interpolation speed \, default 25 ms;
+#X text 20 14 dispatch audio to a zirk_speaker;
+#X floatatom 336 151 5 0 0 0 db - -;
+#X obj 67 473 zirk_dispatcher 3;
+#X msg 204 422 on \$1;
+#X text 227 396 switch on/off manually;
+#X obj 67 132 *~;
+#X obj 67 78 osc~ 440;
+#X obj 82 106 osc~ 0.1;
+#X text 331 51 catch audio to zirk_speaker#;
+#X obj 336 77 catch~ zirk_speaker3;
+#X obj 336 103 env~;
+#X obj 336 126 - 100;
+#X text 39 43 creation args: id;
+#X text 275 298 set max number of speakers \, switches off any objects
+whose id is greater than the max, f 38;
+#X text 184 198 gain;
+#X connect 0 0 14 2;
+#X connect 1 0 9 0;
+#X connect 2 0 9 0;
+#X connect 3 0 0 0;
+#X connect 4 0 0 0;
+#X connect 5 0 15 0;
+#X connect 6 0 8 0;
+#X connect 7 0 14 1;
+#X connect 8 0 14 1;
+#X connect 9 0 14 2;
+#X connect 15 0 14 2;
+#X connect 17 0 14 0;
+#X connect 18 0 17 0;
+#X connect 19 0 17 1;
+#X connect 21 0 22 0;
+#X connect 22 0 23 0;
+#X connect 23 0 13 0;

@@ -1,0 +1,25 @@
+#N canvas 345 96 442 360 10;
+#X obj 74 162 zirk_stereo;
+#X obj 77 87 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -262144
+-1 -1 0 1;
+#X floatatom 74 113 5 0 1 0 rms - -;
+#X obj 74 218 route 0 1;
+#X floatatom 74 296 5 0 0 1 rms - -;
+#X floatatom 99 245 5 0 0 1 rms - -;
+#X obj 77 321 hsl 64 15 0 1 0 0 empty empty empty -2 -8 0 10 -262144
+-1 -1 0 1;
+#X obj 102 271 hsl 64 15 0 1 0 0 empty empty empty -2 -8 0 10 -262144
+-1 -1 0 1;
+#X text 181 215 outputs channel & gain pairs with: 0 - left & 1 - right
+, f 34;
+#X text 35 44 creation args: pan (optional);
+#X text 181 112 pan position 0-1 \, 0.5 is middle;
+#X text 17 15 stereo pan gain calculator \, complements [vbap] & [hoa]
+;
+#X connect 0 0 3 0;
+#X connect 1 0 2 0;
+#X connect 2 0 0 0;
+#X connect 3 0 4 0;
+#X connect 3 1 5 0;
+#X connect 4 0 6 0;
+#X connect 5 0 7 0;

@@ -1,0 +1,48 @@
+#N canvas 634 43 438 380 10;
+#X obj 79 162 pack 0 0 0;
+#X obj 101 132 t b f;
+#X obj 143 132 t b f;
+#X obj 82 74 hsl 64 15 -1 1 0 0 empty empty x -12 7 0 10 -262144 -1
+-1 0 1;
+#X obj 104 92 hsl 64 15 -1 1 0 0 empty empty y -12 7 0 10 -262144 -1
+-1 0 1;
+#X obj 118 110 hsl 64 15 -1 1 0 0 empty empty z -12 7 0 10 -262144
+-1 -1 0 1;
+#X text 73 52 cartesian spherical pos -1 to 1;
+#X text 155 72 -1 left \, 1 right;
+#X text 179 91 -1 back \, 1 front;
+#X text 190 109 -1 bottom \, 1 top;
+#X obj 82 315 hsl 64 15 -180 180 0 0 empty empty empty -2 -8 0 10 -262144
+-1 -1 0 1;
+#X obj 79 249 unpack f f f;
+#X floatatom 79 284 5 0 0 0 azimuth - -;
+#X obj 191 315 hsl 64 15 -180 180 0 0 empty empty empty -2 -8 0 10
+-262144 -1 -1 0 1;
+#X floatatom 188 284 5 0 0 0 elevation - -;
+#X obj 309 315 hsl 64 15 -180 180 0 0 empty empty empty -2 -8 0 10
+-262144 -1 -1 0 1;
+#X floatatom 306 284 5 0 0 0 distance - -;
+#X text 191 241 polar spherical pos;
+#X msg 194 162 50 50 100;
+#X text 102 340 degrees -180 to 180;
+#X text 306 338 radius;
+#X text 267 163 a larger sphere;
+#X text 18 15 convert cartesian coordinates to polar coordinates on
+a sphere, f 62;
+#X obj 79 207 xyztoaed;
+#X connect 0 0 23 0;
+#X connect 1 0 0 0;
+#X connect 1 1 0 1;
+#X connect 2 0 0 0;
+#X connect 2 1 0 2;
+#X connect 3 0 0 0;
+#X connect 4 0 1 0;
+#X connect 5 0 2 0;
+#X connect 11 0 12 0;
+#X connect 11 1 14 0;
+#X connect 11 2 16 0;
+#X connect 12 0 10 0;
+#X connect 14 0 13 0;
+#X connect 16 0 15 0;
+#X connect 18 0 23 0;
+#X connect 23 0 11 0;
