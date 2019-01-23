@@ -1,0 +1,101 @@
+#N canvas 484 23 618 639 10;
+#X floatatom 78 348 5 0 100 1 span - -;
+#X obj 339 98 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+1;
+#X obj 392 460 loadbang;
+#X obj 339 75 loadbang;
+#X obj 40 102 *~ 0.1;
+#X obj 40 74 noise~;
+#X obj 40 460 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+1;
+#X msg 40 484 all report level \$1;
+#X msg 411 303 2 -45 45 -135 135;
+#X obj 40 563 vsl 15 48 -100 12 0 0 empty empty empty 0 -9 0 10 -262144
+-1 -1 0 1;
+#X obj 40 510 clone -s 1 4 zirk_speaker;
+#X obj 392 510 clone -s 1 4 zirk_output;
+#X obj 58 563 vsl 15 48 -100 12 0 0 empty empty empty 0 -9 0 10 -262144
+-1 -1 0 1;
+#X obj 77 563 vsl 15 48 -100 12 0 0 empty empty empty 0 -9 0 10 -262144
+-1 -1 0 1;
+#X obj 96 563 vsl 15 48 -100 12 0 0 empty empty empty 0 -9 0 10 -262144
+-1 -1 0 1;
+#X obj 59 246 pack 0 0 0;
+#X obj 81 216 t b f;
+#X obj 123 216 t b f;
+#X obj 62 158 hsl 64 15 -1 1 0 0 empty empty x -12 7 0 10 -262144 -1
+-1 0 1;
+#X obj 84 176 hsl 64 15 -1 1 0 0 empty empty y -12 7 0 10 -262144 -1
+-1 0 1;
+#X obj 98 194 hsl 64 15 -1 1 0 0 empty empty z -12 7 0 10 -262144 -1
+-1 0 1;
+#X msg 392 484 all db -6;
+#X obj 81 322 hsl 64 15 0 1 0 0 empty empty empty -12 7 0 10 -262144
+-1 -1 0 1;
+#X msg 339 120 on \$1;
+#X msg 394 268 2 -45 45;
+#X text 459 268 stereo;
+#X text 529 305 quad;
+#X text 53 136 cartesian spherical pos -1 to 1;
+#X text 392 177 speaker positions;
+#X text 382 120 enable DSP;
+#X text 74 279 sound source virtual width;
+#X obj 339 358 t a;
+#X obj 40 436 loadbang;
+#X text 208 509 sends to 4 zirk_outputs ->;
+#X text 131 393 v pans between 4 zirk_speakers v;
+#X obj 40 535 route 1 2 3 4;
+#X text 123 578 speaker db levels;
+#X obj 394 237 loadbang;
+#X obj 40 393 zirk_hoa 4;
+#X obj 394 339 zirk_layout_hoa;
+#X text 76 298 0 - 1 speaker \, 1 - all speakers;
+#X text 135 156 -1 left \, 1 right;
+#X text 159 175 -1 back \, 1 front;
+#X text 170 193 -1 bottom \, 1 top;
+#N canvas 0 23 322 300 optimizations 0;
+#X obj 89 192 outlet;
+#X msg 89 105 optim maxre;
+#X msg 55 74 optim basic;
+#X msg 118 134 optim inphase;
+#X text 28 29 choose HOA algorithm optimizations;
+#X connect 1 0 0 0;
+#X connect 2 0 0 0;
+#X connect 3 0 0 0;
+#X restore 357 151 pd optimizations;
+#X text 18 13 hoa panner which sends to zirk_speakers \, wraps [hoa~]
+& requires hoa external, f 77;
+#X text 62 43 creation arg: speakercount;
+#X text 392 198 2D: 2 azimuth1 azimuth2 ...;
+#X text 392 215 3D: 3 azimuth1 elevation1 ...;
+#X connect 0 0 38 2;
+#X connect 1 0 23 0;
+#X connect 2 0 21 0;
+#X connect 3 0 1 0;
+#X connect 4 0 38 0;
+#X connect 5 0 4 0;
+#X connect 6 0 7 0;
+#X connect 7 0 10 0;
+#X connect 8 0 39 0;
+#X connect 10 0 35 0;
+#X connect 15 0 38 1;
+#X connect 16 0 15 0;
+#X connect 16 1 15 1;
+#X connect 17 0 15 0;
+#X connect 17 1 15 2;
+#X connect 18 0 15 0;
+#X connect 19 0 16 0;
+#X connect 20 0 17 0;
+#X connect 21 0 11 0;
+#X connect 22 0 0 0;
+#X connect 23 0 31 0;
+#X connect 24 0 39 0;
+#X connect 31 0 38 3;
+#X connect 32 0 6 0;
+#X connect 35 0 9 0;
+#X connect 35 1 12 0;
+#X connect 35 2 13 0;
+#X connect 35 3 14 0;
+#X connect 37 0 24 0;
+#X connect 39 0 31 0;
+#X connect 44 0 31 0;

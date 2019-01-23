@@ -1,0 +1,45 @@
+#N canvas 620 153 657 491 10;
+#X obj 161 414 print;
+#X msg 61 63 start;
+#X msg 110 63 stop;
+#X msg 234 172 poll \$1;
+#X obj 234 148 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X floatatom 271 213 5 0 0 0 - - -;
+#X floatatom 242 376 5 0 0 0 blocks - -;
+#X msg 271 236 refresh \$1;
+#X msg 161 116 time \$1;
+#X floatatom 161 95 5 0 0 0 - - -;
+#X text 414 294 set samplerate;
+#X text 283 376 number of pd sampleblocks per output event;
+#X msg 295 295 samplerate \$1;
+#X msg 295 268 44100;
+#X msg 402 268 96000;
+#X msg 349 268 48000;
+#X text 312 212 set refresh rate in fps;
+#X text 204 415 outputs time or update event;
+#X text 14 15 basic time transport \, outputs elapsed time using pd
+audio block size and samplerate, f 83;
+#X text 218 115 set time offset;
+#X text 255 148 enable update polling?;
+#X text 293 171 sends an "update" message instead of the calculated
+time;
+#X obj 33 63 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0 1
+;
+#X obj 161 345 zirk_transport;
+#X text 149 65 run?;
+#X connect 1 0 23 0;
+#X connect 2 0 23 0;
+#X connect 3 0 23 0;
+#X connect 4 0 3 0;
+#X connect 5 0 7 0;
+#X connect 7 0 23 0;
+#X connect 8 0 23 0;
+#X connect 9 0 8 0;
+#X connect 12 0 23 0;
+#X connect 13 0 12 0;
+#X connect 14 0 12 0;
+#X connect 15 0 12 0;
+#X connect 22 0 23 0;
+#X connect 23 0 0 0;
+#X connect 23 1 6 0;
