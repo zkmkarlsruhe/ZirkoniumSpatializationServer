@@ -9,7 +9,7 @@ Dan Wilcox 2018-2019  (version 2 update)
 
 This software is the rendering server for 3D sound spatialization that ZKM | Hertz-Lab employs for its 3D surround audio system, Klangdom.
 
-![Klangdom](resources/Klangdom.png)
+![Klangdom](doc/Klangdom.png)
 
 The software is programmed in [PureData](https://puredata.info), an open source visual programming language by Miller Puckette.
 
@@ -18,6 +18,7 @@ This engine is embeded in the [Zirkonium Trajectory Editor](http://zkm.de/zirkon
 ### Dependencies
 
 To open the files, you will need [PureData](https://puredata.info). 
+
 In order to realize VBAP (Vector-based amplitude panning) the software employs an custom-built object based on the external Pd object implemented by Ville Pukki available from his [website](http://legacy.spa.aalto.fi/research/cat/vbap/).
 
 ### Control Messages
