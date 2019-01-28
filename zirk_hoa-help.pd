@@ -70,6 +70,8 @@
 #X text 392 215 3D: 3 azimuth1 elevation1 ...;
 #X text 275 577 note: falls back to zirk_stereo if speaker count ==
 2;
+#X text 392 362 note: pos & span are ignored until layout is received
+, f 28;
 #X connect 0 0 38 2;
 #X connect 1 0 23 0;
 #X connect 2 0 21 0;

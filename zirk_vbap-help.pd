@@ -11,11 +11,11 @@
 #X msg 40 534 all report level \$1;
 #X msg 411 283 2 -45 45 -135 135;
 #X obj 40 613 vsl 15 48 -100 12 0 0 empty empty empty 0 -9 0 10 -262144
--1 -1 3154 1;
+-1 -1 3151 1;
 #X obj 40 560 clone -s 1 4 zirk_speaker;
 #X obj 392 560 clone -s 1 4 zirk_output;
 #X obj 58 613 vsl 15 48 -100 12 0 0 empty empty empty 0 -9 0 10 -262144
--1 -1 3154 1;
+-1 -1 3151 1;
 #X obj 77 613 vsl 15 48 -100 12 0 0 empty empty empty 0 -9 0 10 -262144
 -1 -1 0 1;
 #X obj 96 613 vsl 15 48 -100 12 0 0 empty empty empty 0 -9 0 10 -262144
@@ -76,6 +76,8 @@ zirk_layout_vbap object to precompute the loudspeaker triplet positions
 #X text 392 193 3D: 3 azimuth1 elevation1 ...;
 #X text 270 628 note: falls back to zirk_stereo if speaker count ==
 2;
+#X text 396 347 note: pos & span are ignored until layout is received
+, f 28;
 #X connect 0 0 15 2;
 #X connect 1 0 24 0;
 #X connect 2 0 22 0;
