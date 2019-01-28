@@ -17,11 +17,11 @@ for all vbap objects;
 #X msg 168 383 2 -45 45 135 -135;
 #X obj 80 470 print;
 #X obj 80 416 zirk_layout_vbap;
-#X obj 103 443 route count;
-#X obj 166 470 zirkvbap;
-#X obj 211 495 print vbap;
-#X text 23 335 note: filter out the "count" message when sending to
-a [vbap] object directly:;
+#X obj 208 470 zirkvbap;
+#X obj 253 495 print vbap;
+#X text 23 335 note: filter out the "count" and "stereo" messages when
+sending to a [vbap] object directly:;
+#X obj 103 443 route count stereo;
 #X connect 0 0 4 0;
 #X connect 0 1 9 0;
 #X connect 1 0 0 0;
@@ -29,6 +29,6 @@ a [vbap] object directly:;
 #X connect 12 0 15 0;
 #X connect 13 0 15 0;
 #X connect 15 0 14 0;
-#X connect 15 0 16 0;
-#X connect 16 1 17 0;
-#X connect 17 4 18 0;
+#X connect 15 0 19 0;
+#X connect 16 4 17 0;
+#X connect 19 2 16 0;

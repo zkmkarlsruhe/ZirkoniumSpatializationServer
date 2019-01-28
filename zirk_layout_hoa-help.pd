@@ -11,10 +11,10 @@ for all hoa objects;
 #X msg 168 273 2 -45 45 135 -135;
 #X obj 80 306 zirk_layout_hoa;
 #X obj 80 360 print;
-#X obj 208 360 zirkhoa;
-#X obj 103 333 route stereo count;
-#X text 23 225 note: filter out the "stereo" & "count" messages when
-sending to a [hoa] object directly:;
+#X obj 166 360 zirkhoa;
+#X obj 103 333 route count;
+#X text 23 225 note: filter out the "count" message when sending to
+a [hoa] object directly:;
 #X connect 0 0 3 0;
 #X connect 1 0 3 0;
 #X connect 3 0 2 0;
@@ -22,4 +22,4 @@ sending to a [hoa] object directly:;
 #X connect 7 0 8 0;
 #X connect 8 0 9 0;
 #X connect 8 0 11 0;
-#X connect 11 2 10 0;
+#X connect 11 1 10 0;
