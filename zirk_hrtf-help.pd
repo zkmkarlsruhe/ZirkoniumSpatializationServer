@@ -14,11 +14,11 @@
 #X obj 78 205 t b f;
 #X obj 120 205 t b f;
 #X obj 59 147 hsl 64 15 -1 1 0 0 empty empty x -12 7 0 10 -262144 -1
--1 3300 1;
+-1 0 1;
 #X obj 81 165 hsl 64 15 -1 1 0 0 empty empty y -12 7 0 10 -262144 -1
--1 5700 1;
+-1 0 1;
 #X obj 95 183 hsl 64 15 -1 1 0 0 empty empty z -12 7 0 10 -262144 -1
--1 1600 1;
+-1 0 1;
 #X text 50 125 cartesian spherical pos -1 to 1;
 #X text 132 145 -1 left \, 1 right;
 #X text 156 164 -1 back \, 1 front;
