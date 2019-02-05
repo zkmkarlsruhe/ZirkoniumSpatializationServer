@@ -12,9 +12,6 @@
 #X obj 30 49 declare -path . -path rendering_algorithm/vbap -path ../externals
 ;
 #X text 23 15 add local paths so included externals will load;
-#X obj 32 96 loadbang;
-#X msg 32 125 \; pd dsp 1;
-#X connect 2 0 3 0;
 #X restore 194 42 pd declare;
 #N canvas 567 204 390 185 sourcefiles 0;
 #X obj 79 96 r \$0-sourcefile;
