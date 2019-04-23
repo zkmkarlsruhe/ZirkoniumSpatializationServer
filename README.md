@@ -88,11 +88,11 @@ Receiving:
   - _channel_ _float_ (rms gain 0 - 1)
   - _channel_ db _float_ (-100 - +12)
   - _channel_ gain _float_ (alias for "db" message)
-* hrtf (channel 1 - 2 for stereo left & right)
+* hrtf (stereo output)
   - on _bool_ (0 or 1, forwards to all zirk_ids)
-  - record _channel_ open _filepath_
-  - record _channel_ start (requires "open" message first)
-  - record _channel_ stop
+  - record open _filepath_
+  - record start (requires "open" message first)
+  - record stop
 
 Sending:
 
