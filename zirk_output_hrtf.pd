@@ -1,5 +1,5 @@
-#N canvas 535 433 569 355 10;
-#X obj 109 250 dac~;
+#N canvas 535 433 569 396 10;
+#X obj 101 306 dac~;
 #X obj 303 110 + 100;
 #X obj 303 135 dbtorms;
 #X obj 303 160 t f;
@@ -7,8 +7,8 @@
 #X text 32 13 stereo HRTF receiver;
 #X obj 173 45 catch~ zirk_hrtf2;
 #X obj 33 45 catch~ zirk_hrtf1;
-#X obj 173 206 *~ 1;
-#X obj 33 206 *~ 1;
+#X obj 173 196 *~ 1;
+#X obj 33 196 *~ 1;
 #N canvas 0 23 357 245 report 0;
 #X obj 36 29 inlet~;
 #X obj 212 204 switch~;
@@ -43,8 +43,8 @@
 #X connect 14 0 16 0;
 #X connect 15 0 5 0;
 #X connect 16 0 5 0;
-#X restore 86 280 pd report level;
-#X obj 86 306 outlet;
+#X restore 86 334 pd report level;
+#X obj 86 360 outlet;
 #X obj 459 109 s \$0-report;
 #X obj 303 78 route gain db float record report;
 #N canvas 0 23 274 227 record 0;
@@ -58,6 +58,8 @@
 #X connect 2 0 3 0;
 #X connect 4 0 3 1;
 #X restore 369 280 pd record;
+#X obj 101 250 hip~ 5;
+#X obj 122 277 hip~ 5;
 #X connect 1 0 2 0;
 #X connect 2 0 3 0;
 #X connect 3 0 8 1;
@@ -65,15 +67,17 @@
 #X connect 4 0 13 0;
 #X connect 6 0 8 0;
 #X connect 7 0 9 0;
-#X connect 8 0 0 1;
 #X connect 8 0 10 1;
 #X connect 8 0 14 1;
-#X connect 9 0 0 0;
+#X connect 8 0 16 0;
 #X connect 9 0 10 0;
 #X connect 9 0 14 0;
+#X connect 9 0 15 0;
 #X connect 10 0 11 0;
 #X connect 13 0 1 0;
 #X connect 13 1 1 0;
 #X connect 13 2 3 0;
 #X connect 13 3 14 2;
 #X connect 13 4 12 0;
+#X connect 15 0 0 0;
+#X connect 16 0 0 1;

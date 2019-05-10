@@ -36,7 +36,7 @@
 #X msg 215 153 report level \$1;
 #X obj 215 128 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
-#N canvas 697 80 323 348 recording 1;
+#N canvas 697 80 323 348 recording 0;
 #X obj 35 243 outlet;
 #X obj 35 215 list trim;
 #X obj 35 85 savepanel;
