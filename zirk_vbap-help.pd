@@ -11,11 +11,9 @@
 #X msg 40 534 all report level \$1;
 #X msg 411 283 2 -45 45 -135 135;
 #X obj 40 613 vsl 15 48 -100 12 0 0 empty empty empty 0 -9 0 10 -262144
--1 -1 3151 1;
-#X obj 40 560 clone -s 1 4 zirk_speaker;
-#X obj 392 560 clone -s 1 4 zirk_output;
+-1 -1 0 1;
 #X obj 58 613 vsl 15 48 -100 12 0 0 empty empty empty 0 -9 0 10 -262144
--1 -1 3151 1;
+-1 -1 0 1;
 #X obj 77 613 vsl 15 48 -100 12 0 0 empty empty empty 0 -9 0 10 -262144
 -1 -1 0 1;
 #X obj 96 613 vsl 15 48 -100 12 0 0 empty empty empty 0 -9 0 10 -262144
@@ -78,34 +76,36 @@ zirk_layout_vbap object to precompute the loudspeaker triplet positions
 2;
 #X text 396 347 note: pos & span are ignored until layout is received
 , f 28;
-#X connect 0 0 15 2;
-#X connect 1 0 24 0;
-#X connect 2 0 22 0;
+#X obj 40 560 clone -s 1 zirk_speaker 4;
+#X obj 392 560 clone -s 1 zirk_output 4;
+#X connect 0 0 13 2;
+#X connect 1 0 22 0;
+#X connect 2 0 20 0;
 #X connect 3 0 1 0;
-#X connect 4 0 15 0;
+#X connect 4 0 13 0;
 #X connect 5 0 4 0;
 #X connect 6 0 7 0;
-#X connect 7 0 10 0;
-#X connect 8 0 29 0;
-#X connect 10 0 38 0;
-#X connect 15 0 36 0;
-#X connect 16 0 15 1;
-#X connect 17 0 16 0;
-#X connect 17 1 16 1;
-#X connect 18 0 16 0;
-#X connect 18 1 16 2;
+#X connect 7 0 50 0;
+#X connect 8 0 27 0;
+#X connect 13 0 34 0;
+#X connect 14 0 13 1;
+#X connect 15 0 14 0;
+#X connect 15 1 14 1;
+#X connect 16 0 14 0;
+#X connect 16 1 14 2;
+#X connect 17 0 14 0;
+#X connect 18 0 15 0;
 #X connect 19 0 16 0;
-#X connect 20 0 17 0;
-#X connect 21 0 18 0;
-#X connect 22 0 11 0;
-#X connect 23 0 0 0;
-#X connect 24 0 33 0;
-#X connect 25 0 29 0;
-#X connect 29 0 33 0;
-#X connect 33 0 15 3;
-#X connect 34 0 6 0;
-#X connect 38 0 9 0;
-#X connect 38 1 12 0;
-#X connect 38 2 13 0;
-#X connect 38 3 14 0;
-#X connect 41 0 25 0;
+#X connect 20 0 51 0;
+#X connect 21 0 0 0;
+#X connect 22 0 31 0;
+#X connect 23 0 27 0;
+#X connect 27 0 31 0;
+#X connect 31 0 13 3;
+#X connect 32 0 6 0;
+#X connect 36 0 9 0;
+#X connect 36 1 10 0;
+#X connect 36 2 11 0;
+#X connect 36 3 12 0;
+#X connect 39 0 23 0;
+#X connect 50 0 36 0;

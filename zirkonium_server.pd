@@ -3,10 +3,10 @@
 ;
 #N canvas 781 75 345 172 inputs 0;
 #X obj 33 78 r \$0-input;
-#X obj 33 108 clone -s 1 64 zirk_input;
 #X text 27 18 Hardware input channels;
 #X text 27 38 Audio signal sent to receive~ name "zirk_inputID";
-#X connect 0 0 1 0;
+#X obj 33 108 clone -s 1 zirk_input 64;
+#X connect 0 0 3 0;
 #X restore 28 110 pd inputs;
 #N canvas 0 23 382 196 declare 0;
 #X obj 30 49 declare -path . -path rendering_algorithm/vbap -path ../externals
@@ -15,11 +15,11 @@
 #X restore 194 42 pd declare;
 #N canvas 567 204 390 185 sourcefiles 0;
 #X obj 79 96 r \$0-sourcefile;
-#X obj 79 130 clone -s 1 zirk_sourcefile 64;
 #X text 21 18 Source file players;
 #X text 21 39 You can play up to 64 files at the same time. Per-channel
 audio signals to receive~ name: "zirk_sfID-CHANNEL";
-#X connect 0 0 1 0;
+#X obj 79 130 clone -s 1 zirk_sourcefile 64;
+#X connect 0 0 3 0;
 #X restore 93 110 pd sourcefiles;
 #X text 191 156 virtual speaker layer;
 #X text 191 179 hardware output layer;
@@ -45,7 +45,6 @@ audio signals to receive~ name: "zirk_sfID-CHANNEL";
 #X connect 8 0 9 0;
 #X connect 9 0 3 0;
 #X restore 32 180 pd test id 0;
-#X obj 251 180 clone -s 1 64 zirk_id 64;
 #X obj 32 267 list trim;
 #X obj 32 120 route 0;
 #X obj 71 152 route all;
@@ -55,22 +54,22 @@ to zirk_speakers. zirk_id 0 is a test white noise source.;
 #X obj 32 295 s #zirk-out;
 #X text 31 17 Sound object \, maps & spatializes inputs to outputs
 ;
-#X connect 0 0 4 0;
-#X connect 1 0 5 0;
-#X connect 2 0 8 0;
-#X connect 3 0 0 0;
-#X connect 3 1 8 0;
-#X connect 4 0 9 0;
+#X obj 251 180 clone -s 1 zirk_id 64 64;
+#X connect 0 0 3 0;
+#X connect 1 0 4 0;
+#X connect 2 0 7 0;
+#X connect 3 0 8 0;
+#X connect 4 0 2 0;
+#X connect 4 1 5 0;
+#X connect 4 1 10 0;
 #X connect 5 0 2 0;
-#X connect 5 1 6 0;
-#X connect 5 1 3 0;
-#X connect 6 0 2 0;
-#X connect 8 0 4 0;
+#X connect 7 0 3 0;
+#X connect 10 0 0 0;
+#X connect 10 1 7 0;
 #X restore 28 133 pd ids;
 #N canvas 424 327 394 278 speakers 0;
 #X obj 123 173 list prepend level speaker;
 #X obj 123 121 r \$0-speaker;
-#X obj 123 147 clone -s 1 64 zirk_speaker;
 #X obj 123 201 list trim;
 #X text 15 8 Virtual speakers;
 #X text 15 52 The connection of speaker and hardware output channels
@@ -79,18 +78,19 @@ can be configurable \, thus the speaker IDs are NOT hardware out channels.
 #X text 15 30 Audio signals are received by catch~ name: "zirk_speakerID"
 ;
 #X obj 123 230 s #zirk-out;
-#X connect 0 0 3 0;
-#X connect 1 0 2 0;
-#X connect 2 0 0 0;
-#X connect 3 0 7 0;
+#X obj 123 147 clone -s 1 zirk_speaker 64;
+#X connect 0 0 2 0;
+#X connect 1 0 7 0;
+#X connect 2 0 6 0;
+#X connect 7 0 0 0;
 #X restore 28 156 pd speakers;
 #N canvas 757 320 390 165 outputs 0;
 #X obj 42 71 r \$0-output;
-#X obj 42 123 clone -s 1 64 zirk_output;
 #X text 26 16 Hardware output channels;
 #X text 26 38 Audio signal received by catch~ name "zirk_outputID"
 ;
-#X connect 0 0 1 0;
+#X obj 42 123 clone -s 1 zirk_output 64;
+#X connect 0 0 3 0;
 #X restore 28 179 pd outputs;
 #X obj 29 12 r #zirk-in;
 #X text 191 110 input & source layer;
