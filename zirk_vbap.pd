@@ -1,4 +1,5 @@
-#N canvas 221 129 747 650 10;
+#N canvas 219 49 747 650 10;
+#X declare -path ./externals/vbap;
 #X obj 33 38 inlet~;
 #X obj 118 38 inlet;
 #X obj 118 221 t b a, f 6;
@@ -50,6 +51,7 @@
 #X obj 329 622 s \$0-stereo;
 #X obj 329 586 < 3;
 #X obj 33 623 clone -s 1 zirk_dispatcher \$1;
+#X obj 426 585 declare -path ./externals/vbap;
 #X connect 0 0 8 0;
 #X connect 1 0 17 0;
 #X connect 2 0 19 0;

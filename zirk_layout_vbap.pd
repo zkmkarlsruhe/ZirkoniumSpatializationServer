@@ -1,4 +1,5 @@
 #N canvas 470 187 575 359 10;
+#X declare -path ./externals/vbap;
 #X obj 61 39 inlet;
 #X obj 61 297 outlet;
 #X obj 61 107 list prepend ls-directions;
@@ -13,6 +14,7 @@
 #X obj 61 64 t l l;
 #X text 143 166 stereo default;
 #X msg 358 185 count \$1;
+#X obj 297 42 declare -path ./externals/vbap;
 #X connect 0 0 11 0;
 #X connect 2 0 3 0;
 #X connect 3 0 5 0;

@@ -1,4 +1,5 @@
-#N canvas 906 148 750 549 10;
+#N canvas 372 106 750 549 10;
+#X declare -path ./externals/hoa;
 #X obj 42 33 inlet~;
 #X obj 127 33 inlet;
 #X obj 295 33 inlet;
@@ -69,6 +70,7 @@ zirk_stereo when there are only 2;
 #X obj 638 166 s \$0-layoutset;
 #X obj 638 115 route speakers;
 #X obj 42 516 clone -s 1 zirk_dispatcher \$1;
+#X obj 472 336 declare -path ./externals/hoa;
 #X connect 0 0 6 0;
 #X connect 1 0 42 0;
 #X connect 2 0 44 0;
