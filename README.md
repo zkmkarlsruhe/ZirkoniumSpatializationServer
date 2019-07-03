@@ -71,6 +71,7 @@ Receiving:
   - _id_ hrtf speed _ms_ (default 25)
   - _id_ report level _bool_ (0 or 1, output pre-level db?)
   - _id_ report current _bool_ (0 or 1, output current vbap speaker set?)
+  - 0 noise _float_ (test sound noise type: 0 - pink, 1 - white)
 * speaker (id 1 - n or "all")
   - _id_ _float_ (rms gain 0 - 1)
   - _id_ db _float_ (db gain -100 - +12)
