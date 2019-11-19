@@ -90,10 +90,16 @@ Receiving:
   - _channel_ db _float_ (-100 - +12)
   - _channel_ gain _float_ (alias for "db" message)
 * hrtf (stereo output)
+  - _float_ (rms gain 0 - 1)
+  - db _float_ (-100 - +12)
+  - gain _float_ (alias for "db" message)
   - on _bool_ (0 or 1, forwards to all zirk_ids)
+  - output 1 _channel_ (hardware output # for left, default 1)
+  - output 2 _channel_ (hardware output # for right, default 2)
   - record open _filepath_
   - record start (requires "open" message first)
   - record stop
+  - report level _bool_ (0 or 1)
 
 Sending:
 

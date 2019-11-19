@@ -2,12 +2,12 @@
 #X obj 346 337 zirk_hrtf;
 #X obj 346 109 osc~ 440;
 #X obj 346 136 *~ 0.1;
-#X floatatom 122 112 5 -100 12 0 dB - -;
-#X floatatom 51 112 5 0 1 0 rms - -;
-#X text 169 136 gain;
-#X msg 122 136 db \$1;
-#X text 114 92 -100 - +12;
-#X text 52 91 0 - 1;
+#X floatatom 122 82 5 -100 12 0 dB - -;
+#X floatatom 51 82 5 0 1 0 rms - -;
+#X text 169 106 gain;
+#X msg 122 106 db \$1;
+#X text 114 62 -100 - +12;
+#X text 52 61 0 - 1;
 #X text 19 17 stereo HRTF hardware output channels \, wraps [dac~]
 ;
 #X obj 51 238 zirk_output_hrtf;
@@ -33,8 +33,8 @@
 #X obj 76 300 vsl 15 48 -100 12 0 0 empty empty empty 0 -9 0 10 -262144
 -1 -1 0 1;
 #X text 104 314 output levels in db;
-#X msg 215 153 report level \$1;
-#X obj 215 128 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X msg 215 123 report level \$1;
+#X obj 215 98 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #N canvas 697 80 323 348 recording 0;
 #X obj 35 243 outlet;
@@ -60,7 +60,31 @@
 #X connect 10 0 7 0;
 #X connect 11 0 7 0;
 #X connect 12 0 7 0;
-#X restore 227 192 pd recording;
+#X restore 227 162 pd recording;
+#N canvas 0 23 324 290 set 0;
+#X obj 43 257 outlet;
+#X msg 43 117 output 1 \$1;
+#X obj 43 50 hradio 15 1 0 4 empty empty empty 0 -8 0 10 -262144 -1
+-1 0;
+#X obj 43 72 + 1;
+#X obj 122 153 hradio 15 1 0 4 empty empty empty 0 -8 0 10 -262144
+-1 -1 0;
+#X obj 122 175 + 1;
+#X floatatom 43 95 5 0 0 0 - - -;
+#X floatatom 122 198 5 0 0 0 - - -;
+#X text 124 80 left output;
+#X text 210 183 right output;
+#X msg 122 220 output 2 \$1;
+#X text 26 14 set HRTF output channels \, default 1 & 2;
+#X connect 1 0 0 0;
+#X connect 2 0 3 0;
+#X connect 3 0 6 0;
+#X connect 4 0 5 0;
+#X connect 5 0 7 0;
+#X connect 6 0 1 0;
+#X connect 7 0 10 0;
+#X connect 10 0 0 0;
+#X restore 238 195 pd set outputs;
 #X connect 1 0 2 0;
 #X connect 2 0 0 0;
 #X connect 3 0 6 0;
@@ -82,3 +106,4 @@
 #X connect 28 0 10 0;
 #X connect 29 0 28 0;
 #X connect 30 0 10 0;
+#X connect 31 0 10 0;
