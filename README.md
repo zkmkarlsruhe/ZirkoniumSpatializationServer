@@ -1,27 +1,36 @@
-# Zirkonum Spatialization Server
+Zirkonium Spatialization Server
+==============================
 
 ZKM | Hertz-lab
 
 Dr. Chikashi Miyama 2015-2017 (version 1)  
-Dan Wilcox 2018-2019  (version 2 update)
+Dan Wilcox 2018-2019 (version 2 update)
 
-### Overview
+Overview
+--------
 
-This software is the rendering server for 3D sound spatialization that ZKM | Hertz-Lab employs for its 3D surround audio system, Klangdom.
+This software is the rendering server for 3D sound spatialization that ZKM | Hertz-Lab employs for its 3D surround audio system, the Klangdom (Sound Dome).
 
 ![Klangdom](doc/Klangdom.png)
 
 The software is programmed in [PureData](https://puredata.info), an open source visual programming language by Miller Puckette.
 
-This engine is embeded in the [Zirkonium Trajectory Editor](http://zkm.de/zirkonium), a toolkit for spatial composition and performance, employing libpd.
+This engine is embedded in [Zirkonium3](http://zkm.de/zirkonium), a toolkit for spatial composition and performance, employing libpd.
 
-### Dependencies
+Dependencies
+------------
 
-To open the files, you will need [PureData](https://puredata.info). 
+To open the files, you will need [PureData](https://puredata.info).
 
-In order to realize VBAP (Vector-based amplitude panning) the software employs an custom-built object based on the external Pd object implemented by Ville Pukki available from his [website](http://legacy.spa.aalto.fi/research/cat/vbap/).
+The server uses the following spatilization external objects:
+* VBAP (Vector-Based Amplitude Panning) by Ville Pukki: <http://legacy.spa.aalto.fi/research/cat/vbap/>
+* HOA (Higher-Order Ambisonics) from the HOALibrary by the CICM: <http://hoalibrary.mshparisnord.fr/en> 
+* earplup~ realtime binaural filter (used for HRTF modeling): <https://puredata.info/downloads/earplug>
 
-### Control Messages
+_As of the spring 2020, the project is macOS-only as it employs custom-built versions of the spatialization external objects. In the near future, we would like to formalize the algorithms to use the non-modified versions so the server can run on other platforms such as Windows and Linux._
+
+Control Messages
+----------------
 
 Receiving:
 
@@ -114,7 +123,8 @@ Sending:
     + 3D triplet: set _speaker1_ _speaker2_ _speaker3_
   - current _id_ _set_ (current speaker set)
 
-### Messaging
+Messaging
+---------
 
 * \#zirk-in: server receive (input)
 * \#zirk-out: server send (ouput)
@@ -125,6 +135,7 @@ Sending:
   - zirk_output\#: hardware output channel, ie. zirk_output1, zirk_output2, ...
   - zirk_hrtf1 & zirk_hrtf2: hrtf hardware output channels (left & right)
 
-### Contribution
+Contribution
+------------
 
 If you find a bug, please file it as an issue.
