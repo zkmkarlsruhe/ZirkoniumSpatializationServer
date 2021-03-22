@@ -53,7 +53,7 @@ Receiving:
   - _channel_ db _float_ (db gain -100 - +12)
   - _channel_ gain _float_ (alias for db message)
 * sourcefile (id 1 - n or "all")
-  - _id_ _float_ (rms gain 0-1)
+  - _id_ _float_ (rms gain 0 - 1)
   - _id_ db _float_ (db gain -100 - +12)
   - _id_ gain _float_ (alias for db message)
   - _id_ open _filepath_
@@ -61,6 +61,9 @@ Receiving:
   - _id_ start (requires "open" message first)
   - _id_ stop
 * id (id 1 - n or "all", 0 is test id)
+  - _id_ _float_ (rms gain 0 - 2)
+  - _id_ db _float_ (db gain -100 - +12)
+  - _id_ gain _float_ (alias for db message)
   - _id_ on _bool_ (0 or 1)
   - _id_ input _input_ (zirk_input # or symbol, 0 or "none" disables input)
   - _id_ position _x_ _y_ _z_ (spherical cartesian position, -1 to 1, 0 center)
