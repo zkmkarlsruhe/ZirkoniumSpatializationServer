@@ -1,3 +1,4 @@
+# server externals Makfile
 
 # stop on error
 .SHELLFLAGS = -e
@@ -6,14 +7,16 @@
 EXTERN_DIR = externals
 
 # externals extension
-ifeq ($(UNAME), Darwin)  # Mac
+UNAME = $(shell uname)
+ifeq ($(UNAME), Darwin)
+  # Mac
   EXTERN_EXT = d_fat
+else ifeq ($(OS), Windows_NT)
+  # Windows, use Mingw
+  EXTERN_EXT = dll
 else
-  ifeq ($(OS), Windows_NT)  # Windows, use Mingw
-    EXTERN_EXT = dll
-  else  # Linux or *BSD
-    EXTERN_EXT = pd_linux
-  endif
+  # Linux or *BSD
+  EXTERN_EXT = pd_linux
 endif
 
 PHONY: clean clobber \
