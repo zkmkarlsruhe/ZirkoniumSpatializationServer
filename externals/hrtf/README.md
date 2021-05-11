@@ -56,7 +56,8 @@ Compile with:
 
     make
 
-## Usage
+Usage
+-----
 
 To load this external in Pd, include the directory containing the following files in your Pd search paths:
 
