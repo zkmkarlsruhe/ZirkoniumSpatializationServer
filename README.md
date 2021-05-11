@@ -20,14 +20,35 @@ This engine is embedded in [Zirkonium3](http://zkm.de/zirkonium), a toolkit for 
 Dependencies
 ------------
 
-To open the files, you will need [PureData](https://puredata.info).
+To open the patch files, you will need [Pure Data](https://puredata.info).
 
-The server uses the following spatilization external objects:
+The server uses customized versions of the following spatilization external objects:
 * VBAP (Vector-Based Amplitude Panning) by Ville Pukki: <http://legacy.spa.aalto.fi/research/cat/vbap/>
-* HOA (Higher-Order Ambisonics) from the HOALibrary by the CICM: <http://hoalibrary.mshparisnord.fr/en> 
-* earplup~ realtime binaural filter (used for HRTF modeling): <https://puredata.info/downloads/earplug>
+* HOA (Higher-Order Ambisonics) from the Hoa library by the CICM: <http://hoalibrary.mshparisnord.fr/en>
+* earplug~ realtime binaural filter (used for HRTF modeling) by Pei Xiang: <https://puredata.info/downloads/earplug>
 
-_As of the spring 2020, the project is macOS-only as it employs custom-built versions of the spatialization external objects. In the near future, we would like to formalize the algorithms to use the non-modified versions so the server can run on other platforms such as Windows and Linux._
+See the README files in the individual external directories for details.
+
+Build
+-----
+
+The source files for the [zirkhoa], [zirkhrtf\~], and [zirkvbap] external libraries are included in the `externals` directory and can be built using the main Makefile or the Makefiles in the individual external directories.
+
+Make sure you have git and a copy of Pure Data installed to your system.
+
+Compile with:
+
+    make
+
+Each external will be built and the compiled object and it's help file will be copied into the main directory.
+
+To clean temporary build files but keep the compiled externals:
+
+    make clean
+
+To remove the compiled externals:
+
+    make clobber
 
 Control Messages
 ----------------

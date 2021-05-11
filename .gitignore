@@ -7,3 +7,8 @@
 # externs
 *.pd_*
 *.d_fat
+zirkhoa-help.pd
+zirkhrtf_data.txt
+zirkhrtf~-help.pd
+zirkvbap-help.pd
+define_loudspeakers-help.pd
