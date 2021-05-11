@@ -1,9 +1,9 @@
 # macOS
 .DS_Store
 
+# build
+*.o
+
 # externs
-zirkhoa*
-zirkhrtf*
-zirkhrtf~*
-zirkvbap*
-define_loudspeakers*
+*.pd_*
+*.d_fat

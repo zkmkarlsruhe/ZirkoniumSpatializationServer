@@ -1,0 +1,92 @@
+#N canvas 453 59 808 653 10;
+#X msg 644 355 \; pd dsp 1;
+#X msg 329 421 0 \, 360 5000;
+#X floatatom 327 257 5 0 0 0 - - -;
+#X msg 723 355 \; pd dsp 0;
+#X text 28 44 This filter utilizes HRTF measurements (compact set)
+of KEMAR Dummy-Head Microphone (http://sound.media.mit.edu/KEMAR.html)
+, f 75;
+#X obj 532 186 soundfiler;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array table 437310 float 0;
+#X coords 0 1 437309 -1 100 60 1;
+#X restore 642 272 graph;
+#X obj 122 313 tabplay~ table;
+#X obj 327 299 line 0 1;
+#X obj 327 276 pack 0 50;
+#X floatatom 328 347 5 0 0 0 - - -;
+#X obj 328 390 line 0 1;
+#X obj 328 366 pack 0 50;
+#X msg 331 478 0 \, 360 5000;
+#X obj 329 446 line 0 50;
+#X text 646 391 audio on;
+#X obj 117 176 tabplay~ table;
+#X obj 117 206 dac~;
+#X msg 164 151 stop;
+#X text 11 207 original --->;
+#X obj 122 607 dac~ 1 2;
+#X text 24 560 filtered --->;
+#X msg 172 281 stop;
+#X msg 122 281 bang;
+#X msg 117 151 bang;
+#X text 405 477 <---a better circle;
+#X text 404 421 <--- circle with noise;
+#X text 361 254 <--- azimuth: 0 - 360 (degrees);
+#X text 361 346 <--- elevation: -40 - 90 (degrees);
+#X text 115 132 start;
+#X text 120 262 start;
+#X obj 532 103 openpanel;
+#X obj 532 83 bng 15 250 50 0 empty empty empty 17 7 0 10 -204786 -1
+-1;
+#X text 553 82 <- open a soundfile;
+#X obj 218 265 noise~;
+#X obj 239 293 tgl 15 0 empty empty empty 17 7 0 10 -204786 -1 -1 0
+1;
+#X text 237 236 for testing:;
+#X msg 532 124 read -resize \$1 table;
+#X obj 330 237 hsl 128 15 0 360 0 0 empty empty empty -2 -8 0 10 -262130
+-1 -1 4700 1;
+#X obj 331 329 hsl 128 15 -40 90 0 1 empty empty empty -2 -8 0 10 -262130
+-1 -1 10500 0;
+#X obj 541 143 loadbang;
+#X obj 218 313 *~ 0;
+#X obj 122 562 zirkhrtf~ 270 -25;
+#X msg 541 163 read -resize voice.wav table;
+#X obj 331 503 line 0 5;
+#X text 327 528 avoid zipper noise: use small line grain;
+#X text 28 20 zirkhrtf~ - convolution binaural filter modifed from
+the earplug~ external, f 75;
+#X text 28 79 The impulse response data "zirkhrtf_data.txt" must be
+in the same path as this external. Must use headphone to hear effective
+filter effects. Fitler could be DSP intensive due to convolution.,
+f 75;
+#X connect 1 0 14 0;
+#X connect 2 0 9 0;
+#X connect 7 0 42 0;
+#X connect 7 1 23 0;
+#X connect 8 0 42 1;
+#X connect 9 0 8 0;
+#X connect 10 0 12 0;
+#X connect 11 0 42 2;
+#X connect 12 0 11 0;
+#X connect 13 0 44 0;
+#X connect 14 0 42 1;
+#X connect 16 0 17 0;
+#X connect 16 0 17 1;
+#X connect 18 0 16 0;
+#X connect 22 0 7 0;
+#X connect 23 0 7 0;
+#X connect 24 0 16 0;
+#X connect 31 0 37 0;
+#X connect 32 0 31 0;
+#X connect 34 0 41 0;
+#X connect 35 0 41 1;
+#X connect 37 0 5 0;
+#X connect 38 0 2 0;
+#X connect 39 0 10 0;
+#X connect 40 0 43 0;
+#X connect 41 0 42 0;
+#X connect 42 0 20 0;
+#X connect 42 1 20 1;
+#X connect 43 0 5 0;
+#X connect 44 0 42 1;
