@@ -19,7 +19,7 @@ else
   EXTERN_EXT = pd_linux
 endif
 
-PHONY: clean clobber \
+.PHONY: clean clobber \
 	extern extern-clean extern-clobber \
 	hoa hoa-depends hoa-clean hoa-clobber \
 	hrtf hrtf-clean hrtf-clobber \
