@@ -4,10 +4,12 @@ lib.name = zirkhrtf~
 
 class.sources = zirkhrtf~.c
 
-datafiles = zirkhrtf~-help.pd zirkhrtf~_data.txt \
-            parse-to-h.pl README.txt LICENSE.txt voice.wav
+datafiles = zirkhrtf~-help.pd zirkhrtf_data.txt \
+            parse-to-h.pl README.md LICENSE.txt voice.wav
 
-make-lib-fat = yes
+define forDarwin
+  make-multi-arch = yes
+endef
 
 PDLIBBUILDER_DIR=.
 include $(PDLIBBUILDER_DIR)/Makefile.pdlibbuilder

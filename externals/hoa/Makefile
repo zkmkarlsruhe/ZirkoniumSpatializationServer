@@ -4,15 +4,15 @@ lib.name = zirkhoa
 
 class.sources = zirkhoa.cpp
 
-datafiles = zirkhoaTest-help.pd
+datafiles = README.md zirkhoa-help.pd
 
 cflags = -I HoaLibrary-Light/ThirdParty/Eigen -I HoaLibrary-Light/Sources
 
 suppress-wunused = yes
-make-lib-fat = yes
 
 define forDarwin
  cflags += -stdlib=libc++ -mmacosx-version-min=10.9
+ make-multi-arch = yes
 endef
 
 PDLIBBUILDER_DIR=.
