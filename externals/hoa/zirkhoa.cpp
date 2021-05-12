@@ -1,3 +1,5 @@
+/* Written for Zirkonium 2015 by Chikashi Miyama | ZKM IMA Karlsruhe */
+
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
