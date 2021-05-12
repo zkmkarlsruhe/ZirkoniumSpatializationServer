@@ -180,7 +180,7 @@ static void zirkhoa_list2D(t_zirkhoa *x, t_atom *argv ){
     	if(oFormat) free(oFormat);
     }
 
-    for(int i = 0; i < numSpeakers; i++){
+    for(unsigned long i = 0; i < numSpeakers; i++){
     	SETFLOAT(&args[0], i);
     	SETFLOAT(&args[1], samples[i]);
         outlet_list(x->x_outlet, gensym("dummy"), 2, &args[0]);
@@ -228,7 +228,7 @@ static void zirkhoa_list3D(t_zirkhoa *x, t_atom *argv ){
     	x->x_decoder3D->process(oFormat, samples);
     	if(oFormat) free(oFormat);
     }
-    for(int i = 0; i < numSpeakers; i++){
+    for(unsigned long i = 0; i < numSpeakers; i++){
     	SETFLOAT(&args[0], i);
     	SETFLOAT(&args[1], samples[i]);
         outlet_list(x->x_outlet, gensym("dummy"), 2, &args[0]);
@@ -396,7 +396,7 @@ static void zirkhoa_getBFormat(t_zirkhoa *x){
   	  	x->x_encoder2D->process(&reference, bFormat);
   	  	x->x_wider2D->process(bFormat, wFormat);
   	  	if(x->x_optim == OPTIM_BASIC){
-  	  		for(int i = 0; i < numHarmonics; i++){
+  	  		for(unsigned long i = 0; i < numHarmonics; i++){
   	  			oFormat[i] = wFormat[i];
   	  		}
   	  	}else{
@@ -422,7 +422,7 @@ static void zirkhoa_getBFormat(t_zirkhoa *x){
   	  	x->x_encoder3D->process(&reference, bFormat);
   	  	x->x_wider3D->process(bFormat, wFormat);
   	  	if(x->x_optim == OPTIM_BASIC){
-  	  		for(int i = 0; i < numHarmonics; i++){
+  	  		for(unsigned long i = 0; i < numHarmonics; i++){
   	  			oFormat[i] = wFormat[i];
   	  		}
   	  	}else{
@@ -435,7 +435,7 @@ static void zirkhoa_getBFormat(t_zirkhoa *x){
 	}
 
 	t_atom * args = (t_atom*)malloc(sizeof(t_atom) * numHarmonics);
- 	for(int i = 0; i < numHarmonics; i++){
+ 	for(unsigned long i = 0; i < numHarmonics; i++){
     	args[i].a_type = A_FLOAT;
 		args[i].a_w.w_float =oFormat[i];
 	}
@@ -463,7 +463,7 @@ static void zirkhoa_speakers(t_zirkhoa *x, t_symbol *selector, int argc, t_atom 
 		}
 	    unsigned long minimumNumberOfSpeakers = x->x_encoder2D->getNumberOfHarmonics();
 	   	int numSpeakers = argc;
-	    if(numSpeakers  < minimumNumberOfSpeakers){
+	    if(numSpeakers < (int)minimumNumberOfSpeakers){
 	        post("too few speakers. the minimum number of speakers is %lu.", minimumNumberOfSpeakers);
 	        return;
 	    }
@@ -496,7 +496,7 @@ static void zirkhoa_speakers(t_zirkhoa *x, t_symbol *selector, int argc, t_atom 
 
 	    int numSpeakers = argc / 2;
 	    unsigned long minimumNumberOfSpeakers = x->x_encoder3D->getNumberOfHarmonics();
-	    if(numSpeakers  < minimumNumberOfSpeakers){
+	    if(numSpeakers < (int)minimumNumberOfSpeakers){
 	        post("too few speakers. the minimum number of speakers is %lu.", minimumNumberOfSpeakers);
 	        return;
 	    }
@@ -544,7 +544,7 @@ static void zirkhoa_getSpeakers(t_zirkhoa *x){
 		numberOfSpeakers = x->x_decoder2D->getNumberOfPlanewaves();
 	    numArgs= numberOfSpeakers;
 	    args = (t_atom*)malloc(sizeof(t_atom) * numArgs );
-	    for(int i = 0; i < numberOfSpeakers; i++){
+	    for(unsigned long i = 0; i < numberOfSpeakers; i++){
     	    args[i].a_type = A_FLOAT;
         	args[i].a_w.w_float = x->x_decoder2D->getPlanewaveAzimuth(i);
     	}
@@ -553,7 +553,7 @@ static void zirkhoa_getSpeakers(t_zirkhoa *x){
 	    numArgs= 2 * numberOfSpeakers;
 	    args = (t_atom*)malloc(sizeof(t_atom) * numArgs );
 	    int argIndex = 0;
-	    for(int i = 0; i < numberOfSpeakers; i++){
+	    for(unsigned long i = 0; i < numberOfSpeakers; i++){
     	    args[argIndex].a_type = A_FLOAT;
         	args[argIndex++].a_w.w_float = x->x_decoder3D->getPlanewaveAzimuth(i);
 
