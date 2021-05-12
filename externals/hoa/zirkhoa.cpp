@@ -7,8 +7,10 @@
 
 #include "Hoa.hpp"
 
-typedef hoa::Encoder<hoa::Hoa3d, float>::Basic Encoder3D;
+//#define DEBUG_ADDRESS
+
 typedef hoa::Encoder<hoa::Hoa2d, float>::Basic Encoder2D;
+typedef hoa::Encoder<hoa::Hoa3d, float>::Basic Encoder3D;
 
 typedef hoa::Decoder<hoa::Hoa2d, float>::Regular Decoder2D;
 typedef hoa::Decoder<hoa::Hoa3d, float>::Regular Decoder3D;
@@ -239,13 +241,17 @@ static void zirkhoa_list3D(t_zirkhoa *x, t_atom *argv ){
     if(wFormat) free(wFormat);
 }
 
+#ifdef DEBUG_ADDRESS
 static void debugAddress(t_zirkhoa *x){
 	post("address: enc2D:%d enc3D:%d \ndec2D:%d dec3D:%d \nwid2D:%d wid3D:%d \noptMaxRe2D:%d optMaxRe3D:%d\n optInP2D:%d optInP3D:%d", 
 		x->x_encoder2D,x->x_encoder3D,x->x_decoder2D,x->x_decoder3D,x->x_wider2D,x->x_wider3D,x->x_optimMaxRe2D,x->x_optimMaxRe3D,x->x_optimInPhase2D,x->x_optimInPhase3D);
 }
+#endif
 
-static void zirkhoa_list(t_zirkhoa *x, t_symbol *dummy, int argc, t_atom *argv ){
-	//debugAddress(x);
+static void zirkhoa_list(t_zirkhoa *x, t_symbol *dummy, int argc, t_atom *argv){
+#ifdef DEBUG_ADDRESS
+	debugAddress(x);
+#endif
 
     if(x->x_dimension == 0){
 		post("setup dimension first");
@@ -704,7 +710,9 @@ static void *zirkhoa_new(void){
 	x->x_wider2D = NULL;
 	x->x_wider3D = NULL;
 
-	//debugAddress(x);
+#ifdef DEBUG_ADDRESS
+	debugAddress(x);
+#endif
 
     return (void *)x;
 }
