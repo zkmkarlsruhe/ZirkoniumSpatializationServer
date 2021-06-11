@@ -1,0 +1,80 @@
+2.2.0: 2021 Jun 11
+
+cross-platform support (finally)
+
+* added sources for original zirkhoa and zirkhrtf~ externals
+
+* updated makefile to build from external source files
+* zirkvbap now builds using pd-lib-builder
+* zirkvbap can now be built into an application with libpd
+* whoops we didn't attribute all of the externals before
+* updated license attribution
+
+* removed external binaries
+* removed redundant hrtf message forward
+
+2.1.0: 2019 Nov 19
+
+* hrtf output channels are now settable
+* added pink noise as default test id source
+* added noise message to switch between pink and white noise types
+
+2.0.1: 2019 Jul 03
+
+* zirk_speaker: make sure on off is only 1 or 0
+* added paths to included externals via declare
+
+2.0.0: 2019 Jun 05
+
+* fixed until loop hang when processing SpeakerDef message
+* fixed messaging so hoa no longer prints errors
+* fixed transport going unresponsive after refresh rate changes
+
+general overhaul:
+  - replaced individual objects with [clone]
+  - modularized various components into abstractions (re-usability)
+  - added help files for all abstractions (documentation & testing)
+  - main send/receive now #zirk-in and #zirk-out
+  - internal messaging now uses zirk_ prefix naming
+  - inspection buffers now named zirk_filebuffer#
+
+* added stereo panner when hoa order is < 1
+* added 5 ms declick when switching objects on & off
+* added noise threshold for report level output
+* added hrtf record level outlet
+* added hrtf output recording to stereo file
+* added zirk_speaker 25ms de-click ramp
+* added dc hip~ to outputs
+
+* server no longer starts dsp on load
+* clip db report levels to smooth jitter and lower amount of change events
+* speaker recording no longer hard coded 24bit, now settable via message
+* zirk_hoa now ignores pos & span until speaker layout or count is received
+* default server refresh rate now 30 fps
+
+1.2.0: 2018 Sep 27
+
+* added MasterGain and VBAPRamp messages
+* added Verbose command to enable verbose printing for command debugging
+* added declare local path & DEBUG messaging print
+* added message spec to readme
+* added vbap help files
+* added gitignore
+
+* disable sfplayer when not in use (saves CPU)
+
+* removed ID status print
+
+1.1.0: 2016 Jun 04
+
+* fixed vbap not found error
+
+* added hoa and hrtf
+* added error handling for too small spread (span) value
+* added 64 channel test
+
+* position format now cartesian (xyz)
+
+1.0.0: 2016 Apr 22
+
+initial version with vbap
