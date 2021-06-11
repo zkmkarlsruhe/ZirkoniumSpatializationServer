@@ -1,6 +1,7 @@
 /*
  * this header aims to make it easy to port Max objects to Pd
  */
+#pragma once
 
 /* name changes */
 #define SETSYM SETSYMBOL

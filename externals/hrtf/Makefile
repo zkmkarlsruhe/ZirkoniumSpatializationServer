@@ -9,6 +9,7 @@ datafiles = zirkhrtf~-help.pd zirkhrtf_data.txt \
 
 define forDarwin
   make-multi-arch = yes
+  cflags += -mmacosx-version-min=10.9
 endef
 
 PDLIBBUILDER_DIR=.

@@ -6,6 +6,7 @@ and
 Unversity of California at Berkeley
 
 See copyright in file with name LICENSE.txt  */
+#pragma once
 
 #include "zirkvbap.h"
 
@@ -34,4 +35,4 @@ static void sort_2D_lss(t_ls lss[MAX_LS_AMOUNT], int sorted_lss[MAX_LS_AMOUNT],
                  int ls_amount);
 static void initContent_ls_directions(t_def_ls *x,int ac,Atom*av);
 
-void vbap_def_ls(t_def_ls *x, t_symbol *s, int ac, Atom *av);
+static void vbap_def_ls(t_def_ls *x, t_symbol *s, int ac, Atom *av);

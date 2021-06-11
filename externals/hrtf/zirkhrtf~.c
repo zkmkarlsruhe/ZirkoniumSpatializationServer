@@ -13,6 +13,8 @@
 #include <math.h>
 #include "m_pd.h"
 
+//#define ZIRKHRTF_DEBUG
+
 /* elevation degree:      -40  -30  -20  -10   0   10  20  30  40  50  60  70  80  90   */
 /* index array:             0    1    2    3   4    5   6   7   8   9  10  11  12  13   */
 /* impulse reponse number: 29   31   37   37  37   37  37  31  29  23  19  13   7   1   */ 
@@ -188,8 +190,8 @@ static void *zirkhrtf_new(t_floatarg azimArg, t_floatarg elevArg){
     t_zirkhrtf_impulse_common *c = (t_zirkhrtf_impulse_common *)pd_findbyclass(key, zirkhrtf_impulse_common_class);
     if (!c){
 
-#ifdef DEBUG
-        post("class not found. Instantiate");
+#ifdef ZIRKHRTF_DEBUG
+        post("zirkhrtf~ new: class not found, instantiating");
 #endif
         c = (t_zirkhrtf_impulse_common *)pd_new(zirkhrtf_impulse_common_class);
         c->c_refcount = 0;
@@ -219,8 +221,8 @@ static void *zirkhrtf_new(t_floatarg azimArg, t_floatarg elevArg){
     }
     c->c_refcount++;
 
-#ifdef DEBUG
-    post("reference count %d", c->c_refcount);
+#ifdef ZIRKHRTF_DEBUG
+    post("zirkhrtf~ new: reference count %d", c->c_refcount);
 #endif
 
     for (i = 0; i < NUM_SAMPLES ; i++){
@@ -267,8 +269,8 @@ void zirkhrtf_free(void){
     if (c){
     	c->c_refcount--;
 
-#ifdef DEBUG
-    	post("reference count %d", c->c_refcount);
+#ifdef ZIRKHRTF_DEBUG
+        post("zirkhrtf~ free: reference count %d", c->c_refcount);
 #endif
 
         if (!c->c_refcount){

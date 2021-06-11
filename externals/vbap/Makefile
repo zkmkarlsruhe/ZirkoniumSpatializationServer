@@ -9,6 +9,7 @@ datafiles = define_loudspeakers.h max2pd.h zirkvbap.h \
 
 define forDarwin
   make-multi-arch = yes
+  cflags += -mmacosx-version-min=10.9
 endef
 
 PDLIBBUILDER_DIR=.
