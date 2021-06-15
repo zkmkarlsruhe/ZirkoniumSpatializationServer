@@ -150,8 +150,8 @@ Sending:
 Messaging
 ---------
 
-* \#zirk-in: server receive (input)
-* \#zirk-out: server send (ouput)
+* \#zirk-in: legacy zirkonium_server wrapper receive (input)
+* \#zirk-out: legacy zirkonium_server wrapper send (ouput)
 * audio signals:
   - zirk_input\#: hardware input channel, ie. zirk_input1, zirk_input2, ...
   - zirk_sf\#-\#: sourcefile & audio channel, ie. zirk_sf1-1, zirk_sf1-2, zirk_sf2-4, ...

@@ -1,0 +1,134 @@
+#N canvas 188 56 1013 714 10;
+#X text 22 42 signal chain: inputs & sourcefiles -> ids -> speakers
+-> outputs, f 65;
+#X text 22 15 zirk_server: complete spatialization server;
+#X text 22 69 creation args: inputs \, outputs \, ids \, sourcefiles
+\, channels per sourcefile (2 \, 8 \, 16 \, or 32), f 92;
+#X obj 511 194 zirk_source 1;
+#X obj 511 167 *~ 0.1;
+#X text 605 121 audio source;
+#X obj 364 308 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+1;
+#X msg 295 151 id 1 on \$1;
+#X obj 295 121 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 33 228 pack 0 0 0;
+#X obj 55 198 t b f;
+#X obj 97 198 t b f;
+#X obj 36 140 hsl 64 15 -1 1 0 0 empty empty x -12 7 0 10 -262144 -1
+-1 4800 1;
+#X obj 58 158 hsl 64 15 -1 1 0 0 empty empty y -12 7 0 10 -262144 -1
+-1 4700 1;
+#X obj 72 176 hsl 64 15 -1 1 0 0 empty empty z -12 7 0 10 -262144 -1
+-1 5300 1;
+#X text 27 118 cartesian spherical pos -1 to 1;
+#X text 109 138 -1 left \, 1 right;
+#X text 133 157 -1 back \, 1 front;
+#X text 144 175 -1 bottom \, 1 top;
+#X obj 33 280 list trim;
+#X obj 33 322 t a;
+#X msg 760 247 2 -45 45 -135 135;
+#X msg 743 212 2 -45 45;
+#X text 808 212 stereo;
+#X text 878 246 quad;
+#X text 741 119 speaker positions;
+#X obj 743 387 t a;
+#X obj 743 182 loadbang;
+#X text 741 140 2D: 2 azimuth1 azimuth2 ...;
+#X text 741 157 3D: 3 azimuth1 elevation1 ...;
+#X obj 782 339 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+1;
+#X text 803 340 current vbap speaker set;
+#X obj 743 281 list prepend layout;
+#X obj 743 312 list trim;
+#X obj 295 516 route level vbap;
+#X msg 385 401 hrtf on \$1;
+#X obj 385 375 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 552 628 vsl 15 48 -100 12 0 0 empty empty empty 0 -9 0 10 -262144
+-1 -1 0 1;
+#X obj 577 628 vsl 15 48 -100 12 0 0 empty empty empty 0 -9 0 10 -262144
+-1 -1 0 1;
+#X obj 552 599 route 1 2;
+#X obj 211 599 route 1;
+#X floatatom 241 625 5 0 0 1 - - -;
+#X obj 547 144 hsl 64 15 0.1 0.9 0 0 empty empty empty -2 -8 0 10 -262144
+-1 -1 0 1;
+#X msg 355 259 id 1 input 1 \, input 1 db -6;
+#X obj 295 564 route id speaker hrtf;
+#X msg 319 226 id 1 input zirk_source1;
+#X obj 295 468 zirk_server 2 4 2 2 8;
+#X obj 33 254 list prepend id 1 position;
+#X obj 341 540 print vbap;
+#X obj 336 627 vsl 15 48 -100 12 0 0 empty empty empty 0 -9 0 10 -262144
+-1 -1 0 1;
+#X obj 354 627 vsl 15 48 -100 12 0 0 empty empty empty 0 -9 0 10 -262144
+-1 -1 0 1;
+#X obj 373 627 vsl 15 48 -100 12 0 0 empty empty empty 0 -9 0 10 -262144
+-1 -1 0 1;
+#X obj 392 627 vsl 15 48 -100 12 0 0 empty empty empty 0 -9 0 10 -262144
+-1 -1 0 1;
+#X obj 336 599 route 1 2 3 4;
+#X text 419 642 speaker db levels;
+#X text 601 643 hrtf db levels;
+#X msg 782 361 id 1 report current \$1;
+#X obj 211 626 vsl 15 48 -100 12 0 0 empty empty empty 0 -9 0 10 -262144
+-1 -1 2728 1;
+#X msg 364 335 speaker all report level \$1 \, hrtf report level \$1
+\, id 1 report level \$1;
+#X text 579 15 see README.md for a list of input & output messages
+;
+#X text 581 37 ZKM | Hertz-Lab 2015-2021;
+#X text 236 643 id db levels;
+#X text 540 257 use input adc~ 1;
+#X text 476 228 use input zirk_source 1;
+#X text 463 400 bypass to hrtf output;
+#X text 370 151 enable id 1;
+#X text 390 308 enable output reporting;
+#X obj 511 122 lib/pinknoise~;
+#X text 441 468 <--- 2 inputs \, 4 outputs \, 2 ids \, 2 sourcefiles
+\, 8 chan per sf, f 62;
+#X connect 4 0 3 0;
+#X connect 6 0 58 0;
+#X connect 7 0 46 0;
+#X connect 8 0 7 0;
+#X connect 9 0 47 0;
+#X connect 10 0 9 0;
+#X connect 10 1 9 1;
+#X connect 11 0 9 0;
+#X connect 11 1 9 2;
+#X connect 12 0 9 0;
+#X connect 13 0 10 0;
+#X connect 14 0 11 0;
+#X connect 19 0 20 0;
+#X connect 20 0 46 0;
+#X connect 21 0 32 0;
+#X connect 22 0 32 0;
+#X connect 26 0 46 0;
+#X connect 27 0 22 0;
+#X connect 30 0 56 0;
+#X connect 32 0 33 0;
+#X connect 33 0 26 0;
+#X connect 34 0 44 0;
+#X connect 34 1 48 0;
+#X connect 35 0 46 0;
+#X connect 36 0 35 0;
+#X connect 39 0 37 0;
+#X connect 39 1 38 0;
+#X connect 40 0 41 0;
+#X connect 40 0 57 0;
+#X connect 42 0 4 1;
+#X connect 43 0 46 0;
+#X connect 44 0 40 0;
+#X connect 44 1 53 0;
+#X connect 44 2 39 0;
+#X connect 45 0 46 0;
+#X connect 46 0 34 0;
+#X connect 47 0 19 0;
+#X connect 53 0 49 0;
+#X connect 53 1 50 0;
+#X connect 53 2 51 0;
+#X connect 53 3 52 0;
+#X connect 56 0 26 0;
+#X connect 58 0 46 0;
+#X connect 67 0 4 0;
