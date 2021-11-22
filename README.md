@@ -81,6 +81,9 @@ Receiving:
   - _id_ open _filepath_ _offset_ (optional sample offset, see [readsf~])
   - _id_ start (requires "open" message first)
   - _id_ stop
+  - _id_ loop _bool_ (0 or 1, loop when file is done playing?)
+  - _id_ report status _bool_ (0 or 1, output play status?)
+  - _id_ report done (0 or 1, output done playing event?)
 * id (id 1 - n or "all", 0 is test id)
   - _id_ _float_ (rms gain 0 - 2)
   - _id_ db _float_ (db gain -100 - +12)
@@ -141,11 +144,15 @@ Sending:
 * level
   - id _id_ _float_ (db -100 to +12)
   - speaker _id_ _float_ (db -100 to +12)
+  - hrtf _channel_ _float_ (output channel 1 or 2, db -100 to +12)
 * vbap
   - set (speaker layout set)
     + 2D pair: set _speaker1_ _speaker2_
     + 3D triplet: set _speaker1_ _speaker2_ _speaker3_
   - current _id_ _set_ (current speaker set)
+* sourcefile
+  - status _id_ _bool_ (play status, 0 or 1)
+  - done _id_ (file finished automatically, not manually stopped)
 
 Messaging
 ---------
