@@ -50,6 +50,22 @@ To remove the compiled externals:
 
     make clobber
 
+Orientation
+-----------
+
+Cartesian coordinates:
+* x: -1 to 1, 0 center & 1 right
+* y: -1 to 1, 0 center & 1 front
+
+Polar coordinates:
+* azimuth:  -180 to 180 or 0 to 360, 0 front & rotate clockwise
+* elevation:  0 to 180, 0 front & 90 above
+
+Note: Speaker layout handling can work with standard math azmiuth orientation
+(0 left, rotate counterclockwise) by transforming to 0 degrees front and
+flipping the rotation. Send the `layout transform 1` then the `layout rotate`,
+and/or `layout flip` messages before sending a speaker layout list.
+
 Control Messages
 ----------------
 
@@ -66,9 +82,9 @@ Receiving:
   - _dimension_ _positions_ (dimension: 2 or 3, forwards to zirk_ids)
     + 2D: 2 _azimuth1_ _azimuth2_ ...
     + 3D: 3 _azimuth1_ _elevation1_ _azimuth2_ _elevation2_ ...
-  - transform _bool_: (0 or 1, apply rotate or flip transforms?)
-  - rotate _float_: (rotate speaker positions in degrees)
-  - flip _bool_: (0 or 1, speaker position vertical flip)
+  - transform _bool_: (0 or 1, enable speaker azimuth transformations)
+  - rotate _float_: (rotate speaker azimuth in degrees, default 90)
+  - flip _bool_: (0 or 1, flip speaker azimuth rotation orientation, default 1)
 * input (channel 1 - n or "all")
   - _channel_ _float_ (rms gain 0-1)
   - _channel_ db _float_ (db gain -100 - +12)
