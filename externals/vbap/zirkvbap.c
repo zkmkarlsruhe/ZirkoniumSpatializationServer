@@ -115,8 +115,8 @@ void main(void)
 	addmess((method)traces, "enabletrace", A_LONG, 0);
 
 	// define_loudspeaker messages
-	addmess((method)zirkvbap_def_ls, "define-loudspeakers", A_GIMME, 0);
-	addmess((method)zirkvbap_def_ls, "define_loudspeakers", A_GIMME, 0);
+	addmess((method)vbap_def_ls, "define-loudspeakers", A_GIMME, 0);
+	addmess((method)vbap_def_ls, "define_loudspeakers", A_GIMME, 0);
 	addmess((method)def_ls_read_directions, "ls-directions", A_GIMME, 0);	
 	addmess((method)def_ls_read_triplets, "ls-triplets", A_GIMME, 0);
 
@@ -317,7 +317,7 @@ static void zirkvbap(t_float g[3], long ls[3], t_zirkvbap *x)
   // gain values. This happens when the virtual source is outside of
   // all loudspeaker sets. 
   
-  //
+  //{
   	gains_modified=0;
   	for(i=0;i<dim;i++)
   		if(g[i]<-0.01){
@@ -337,9 +337,9 @@ static void zirkvbap(t_float g[3], long ls[3], t_zirkvbap *x)
  	 						+ x->x_set_matx[winner_set][8] * g[2];
  	 	} else new_cartdir[2] = 0;
  	 	cart_to_angle(new_cartdir,new_angle_dir);
-    float tmp = x->x_azi;
- 	 	x->x_azi = (new_angle_dir[0] );
-		//post("[zirkvbap] use azimuth %g insted of %g",x->x_azi , tmp);
+    //float tmp = x->x_azi;
+		x->x_azi = (new_angle_dir[0]);
+		//post("[zirkvbap] use azimuth %g instead of %g",x->x_azi , tmp);
  	 	x->x_ele = (new_angle_dir[1]);
  	 }
   //}
@@ -374,9 +374,6 @@ static void additive_zirkvbap(t_float *final_gs, t_float cartdir[3], t_zirkvbap 
     int i,j,k, gains_modified;
   	t_float small_g;
   	t_float big_sm_g, gtmp[3];
-  	long winner_set;
-  	//float new_cartdir[3];
-  	//float new_angle_dir[3];
   	long dim = x->x_dimension;
   	long neg_g_am, best_neg_g_am;
 	t_float g[3] = {0,0,0};
@@ -400,7 +397,6 @@ static void additive_zirkvbap(t_float *final_gs, t_float cartdir[3], t_zirkvbap 
     	if(small_g > big_sm_g && neg_g_am <= best_neg_g_am){
       	big_sm_g = small_g;
       	best_neg_g_am = neg_g_am; 
-      	winner_set=i;
       	g[0]=gtmp[0]; g[1]=gtmp[1];
       	ls[0]= x->x_lsset[i][0]; ls[1]= x->x_lsset[i][1];
       	if(dim==3){

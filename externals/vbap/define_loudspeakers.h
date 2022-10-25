@@ -15,7 +15,9 @@ static void def_ls_bang(t_def_ls *x);
 //static void def_ls_int(t_def_ls *x, long n);
 static void def_ls_read_directions(t_def_ls *x, t_symbol *s, int ac, Atom *av);
 static void def_ls_read_triplets(t_def_ls *x, t_symbol *s, int ac, Atom *av);
+#ifndef VBAP_OBJECT
 static void *def_ls_new(t_symbol *s, int ac, Atom *av); 
+#endif
 //static void def_ls(float g[3], long ls[3], t_def_ls *x);
 static void ls_angles_to_cart(t_ls *ls);
 static void choose_ls_triplets(t_def_ls *x);
@@ -35,4 +37,6 @@ static void sort_2D_lss(t_ls lss[MAX_LS_AMOUNT], int sorted_lss[MAX_LS_AMOUNT],
                  int ls_amount);
 static void initContent_ls_directions(t_def_ls *x,int ac,Atom*av);
 
+#ifdef VBAP_OBJECT
 static void vbap_def_ls(t_def_ls *x, t_symbol *s, int ac, Atom *av);
+#endif
