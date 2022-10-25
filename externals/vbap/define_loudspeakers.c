@@ -90,7 +90,8 @@ void def_ls_int(t_def_ls *x, long n)		// x = the instance of the object, n = the
 static void def_ls_read_triplets(t_def_ls *x, t_symbol *s, int ac, Atom *av)
 // when loudspeaker triplets come in a message
 {
-	t_ls_set *trip_ptr,  *tmp_ptr, *prev;
+	t_ls_set *trip_ptr,  *tmp_ptr;
+	(void)s; /* silence unused param warning */
 	if(x->x_ls_read == 0)
 	{
 		pd_error(x, "define_loudspeakers: Define loudspeaker directions first!");
@@ -104,7 +105,6 @@ static void def_ls_read_triplets(t_def_ls *x, t_symbol *s, int ac, Atom *av)
 	}
 		
  	trip_ptr = x->x_ls_set;
-	prev = NULL;
 	while (trip_ptr != NULL)
 	{
 		tmp_ptr = trip_ptr;
@@ -146,6 +146,7 @@ static void def_ls_read_triplets(t_def_ls *x, t_symbol *s, int ac, Atom *av)
 static void def_ls_read_directions(t_def_ls *x, t_symbol *s, int ac, Atom *av)
 // when loudspeaker directions come in a message
 {
+	(void)s; /* silence unused param warning */
 	if (x->x_ls_read)
 	{
 		// Remove old matrices
@@ -174,11 +175,12 @@ static void ls_angles_to_cart(t_ls *ls)
   ls->z = sin((t_float) ele * atorad);
 }
 
+#ifndef VBAP_OBJECT
 /* create new instance of object... MUST send it an int even if you do nothing with this int!! */
 static void *def_ls_new(t_symbol *s, int ac, Atom *av)	
 {
-	// s is object name (we ignore it)
 	t_def_ls *x = (t_def_ls *)newobject(def_ls_class);
+	(void)s; /* silence unused param warning */
 
 #ifdef PD
 	x->x_outlet0 =  outlet_new(&x->x_obj, gensym("list"));  /* create a (list) outlet */
@@ -190,13 +192,15 @@ static void *def_ls_new(t_symbol *s, int ac, Atom *av)
 
 	return x;					/* return a reference to the object instance */
 }
-
+#else
 /* define-loudspeakers message integrated into vbap object */
 void vbap_def_ls(t_def_ls *x, t_symbol *s, int ac, Atom *av)	
 {
+	(void)s; /* silence unused param warning */
 	initContent_ls_directions(x,ac,av); // Initialize object internal data from a ls-directions list
 	def_ls_bang(x); // calculate and send matrix to vbap
 }
+#endif
 
 /** Initialize the object content from parameters : ls-directions list */
 static void initContent_ls_directions(t_def_ls *x,int ac,Atom*av)
@@ -224,7 +228,7 @@ static void initContent_ls_directions(t_def_ls *x,int ac,Atom*av)
 	x->x_def_ls_amount= (ac-1) / (x->x_def_ls_dimension - 1);
 
 	// read loudspeaker direction angles  
-    int i;
+  int i;
 	for(i=0; i < x->x_def_ls_amount;i++)
 	{
 		t_float azi = 0;
@@ -250,7 +254,6 @@ static void initContent_ls_directions(t_def_ls *x,int ac,Atom*av)
 	
 	if(x->x_ls_read == 1)
 	{
-        int i;
 		for(i=0;i<x->x_def_ls_amount;i++)
 		{
 			ls_angles_to_cart(&x->x_ls[i]);	

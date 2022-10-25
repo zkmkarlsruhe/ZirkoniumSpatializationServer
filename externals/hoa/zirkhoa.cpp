@@ -484,7 +484,7 @@ static void zirkhoa_speakers(t_zirkhoa *x, t_symbol *selector, int argc, t_atom 
 	        if(argv[i].a_type == A_FLOAT){
 				x->x_decoder2D->setPlanewaveAzimuth(i, argv[i].a_w.w_float);
 	        }else{
-	            pd_error(x, "zirkhoa: argment %d wrong type, azimuth set to 0", index);
+	            pd_error(x, "zirkhoa: argment %d wrong type, azimuth set to 0", i);
 	            x->x_decoder2D->setPlanewaveAzimuth(i, 0);
 	        }
 	        x->x_decoder2D->computeRendering();
