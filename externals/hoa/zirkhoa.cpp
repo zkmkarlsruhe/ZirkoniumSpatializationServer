@@ -149,7 +149,7 @@ static void dealloc_decoders(t_zirkhoa *x ){
 static void zirkhoa_list2D(t_zirkhoa *x, t_atom *argv ){
 
     if(argv[0].a_type != A_FLOAT){
-        post("wrong type of arguments");
+        pd_error(x, "zirkhoa: list2D wrong type of arguments");
     	return;
     }
 
@@ -196,7 +196,7 @@ static void zirkhoa_list2D(t_zirkhoa *x, t_atom *argv ){
 static void zirkhoa_list3D(t_zirkhoa *x, t_atom *argv ){
 
     if((argv[0].a_type != A_FLOAT) || (argv[1].a_type != A_FLOAT)){
-        post("wrong type of arguments");
+        pd_error(x, "zirkhoa: list3D wrong type of arguments");
     	return;
     }
 
@@ -254,31 +254,31 @@ static void zirkhoa_list(t_zirkhoa *x, t_symbol *dummy, int argc, t_atom *argv){
 #endif
 
     if(x->x_dimension == 0){
-		post("setup dimension first");
+		pd_error(x, "zirkhoa: setup dimension first");
 		return;
 	}
 	if(x->x_dimension == 2){
 	    if(!x->x_encoder2D){
-	    	post("set up order");
+			pd_error(x, "zirkhoa: set up order");
 	    	return;
 	    }
 	    if(!x->x_decoder2D){
-	        post("set up speakers");
+	        pd_error(x, "zirkhoa: set up speakers");
 	        return;
 	    }
 	}else{
 	    if(!x->x_encoder3D){
-	    	post("set up order");
+			pd_error(x, "zirkhoa: set up order");
 	    	return;
 	    }
 	    if(!x->x_decoder3D){
-	        post("set up speakers");
+			pd_error(x, "zirkhoa: set up speakers");
 	        return;
 	    }
 	}
 
 	if( argc == 0 ){
-    	post("insufficient number of argument");
+		pd_error(x, "zirkhoa: insufficient number of arguments");
     	return;
     }
 
@@ -289,7 +289,7 @@ static void zirkhoa_list(t_zirkhoa *x, t_symbol *dummy, int argc, t_atom *argv){
     	zirkhoa_list2D(x, argv);
     }else {
     	if(argc != 2){
-			post("wrong number of argument. must be 2.");
+			pd_error(x, "zirkhoa: wrong number of arguments, must be 2");
     		return;
     	}
     	zirkhoa_list3D(x, argv);
@@ -303,7 +303,7 @@ static void zirkhoa_dimension(t_zirkhoa *x, t_floatarg f){
 	int previousDimension = x->x_dimension;
 
 	if(!(dim == 2 || dim == 3)){
-		post("dimension must be 2 or 3");
+		pd_error(x, "zirkhoa: dimension must be 2 or 3");
 		return;
 	}
 	x->x_dimension = dim;
@@ -321,13 +321,13 @@ static void zirkhoa_getDimension(t_zirkhoa *x){
 
 static void zirkhoa_order(t_zirkhoa *x, t_floatarg f){
 	if(x->x_dimension == 0){
-		post("setup dimension first!");
+		pd_error(x, "zirkhoa: setup dimension first");
 		return;
 	}
 
     unsigned long order = (unsigned long)f;
     if(order < 1 || order > 7){
-        post("The order must be between 1 and 7.");
+        post("order must be between 1 and 7");
         return;
     }
 	dealloc_processors(x);
@@ -364,7 +364,7 @@ static void zirkhoa_getPosition(t_zirkhoa *x){
 
 	if(x->x_dimension == 2){
 		if(!x->x_encoder2D){
-			post("setup order and speaker first");
+			pd_error(x, "zirkhoa: setup order and speaker first");
 			return;
 		}
 		t_atom positionAtom;
@@ -373,7 +373,7 @@ static void zirkhoa_getPosition(t_zirkhoa *x){
 
 	}else{
 		if(!x->x_encoder3D){
-			post("setup order and speaker first");
+			pd_error(x, "zirkhoa: setup order and speaker first");
 			return;
 		}
 	    t_atom positionAtom[2];
@@ -390,7 +390,7 @@ static void zirkhoa_getBFormat(t_zirkhoa *x){
 	float * bFormat, * wFormat, *oFormat;
 	if(x->x_dimension == 2){
 		if(!x->x_encoder2D){
-			post("setup order and speaker first");
+			pd_error(x, "zirkhoa: setup order and speaker first");
 			return;
 		}
 	    numHarmonics = x->x_encoder2D->getNumberOfHarmonics();
@@ -415,7 +415,7 @@ static void zirkhoa_getBFormat(t_zirkhoa *x){
 	}else{
 
 		if(!x->x_encoder3D){
-			post("setup order and speaker first");
+			pd_error(x, "zirkhoa: setup order and speaker first");
 			return;
 		}
 
@@ -457,20 +457,20 @@ static void zirkhoa_getBFormat(t_zirkhoa *x){
 static void zirkhoa_speakers(t_zirkhoa *x, t_symbol *selector, int argc, t_atom *argv ){
 
 	if(x->x_dimension == 0){
-		post("setup dimension first");
+		pd_error(x, "zirkhoa: setup dimension first");
 		return;
 	}
 
 
 	if(x->x_dimension == 2){
 		if(!x->x_encoder2D){
-			post("set up order first");
+			pd_error(x, "zirkhoa: set up order first");
 	        return;
 		}
 	    unsigned long minimumNumberOfSpeakers = x->x_encoder2D->getNumberOfHarmonics();
 	   	int numSpeakers = argc;
 	    if(numSpeakers < (int)minimumNumberOfSpeakers){
-	        post("too few speakers. the minimum number of speakers is %lu.", minimumNumberOfSpeakers);
+	        pd_error(x, "zirkhoa: too few speakers. the minimum number of speakers is %lu", minimumNumberOfSpeakers);
 	        return;
 	    }
 
@@ -484,26 +484,26 @@ static void zirkhoa_speakers(t_zirkhoa *x, t_symbol *selector, int argc, t_atom 
 	        if(argv[i].a_type == A_FLOAT){
 				x->x_decoder2D->setPlanewaveAzimuth(i, argv[i].a_w.w_float);
 	        }else{
-	            post ("argment:%d wrong type. azimuth set to 0.", index);
+	            pd_error(x, "zirkhoa: argment %d wrong type, azimuth set to 0", index);
 	            x->x_decoder2D->setPlanewaveAzimuth(i, 0);
 	        }
 	        x->x_decoder2D->computeRendering();
 	    }
 	}else{
 		if(!x->x_encoder3D){
-			post("set up order first");
+			pd_error(x, "zirkhoa: set up order first");
 	        return;
 		}
 
 	    if(argc % 2){
-	        post("wrong number of argument, %d. should be even number.", argc);
+	        pd_error(x, "zirkhoa: wrong number of argument, %d should be even number", argc);
 	        return;
 	    }
 
 	    int numSpeakers = argc / 2;
 	    unsigned long minimumNumberOfSpeakers = x->x_encoder3D->getNumberOfHarmonics();
 	    if(numSpeakers < (int)minimumNumberOfSpeakers){
-	        post("too few speakers. the minimum number of speakers is %lu.", minimumNumberOfSpeakers);
+	        pd_error(x, "zirkhoa: too few speakers, the minimum number is %lu", minimumNumberOfSpeakers);
 	        return;
 	    }
 
@@ -519,7 +519,7 @@ static void zirkhoa_speakers(t_zirkhoa *x, t_symbol *selector, int argc, t_atom 
 	        if(argv[index].a_type == A_FLOAT){
 				x->x_decoder3D->setPlanewaveAzimuth(i, argv[index].a_w.w_float);
 	        }else{
-	            post("argment:%d wrong type. azimuth set to 0.", index);
+	            pd_error(x, "zirkhoa: argment %d wrong type, azimuth set to 0", index);
 	            x->x_decoder3D->setPlanewaveAzimuth(i, 0);
 	        }
 	        
@@ -527,7 +527,7 @@ static void zirkhoa_speakers(t_zirkhoa *x, t_symbol *selector, int argc, t_atom 
 	        if(argv[index].a_type == A_FLOAT){
 	            x->x_decoder3D->setPlanewaveElevation(i, argv[index].a_w.w_float);
 	        }else{
-	            post("argment:%d wrong type. elevation set to 0.", index);
+	            pd_error(x, "zirkhoa: argment: %d wrong type, elevation set to 0", index);
 	            x->x_decoder3D->setPlanewaveElevation(i, argv[index].a_w.w_float);
 	        }
 	        index++;
@@ -540,7 +540,7 @@ static void zirkhoa_speakers(t_zirkhoa *x, t_symbol *selector, int argc, t_atom 
 static void zirkhoa_getSpeakers(t_zirkhoa *x){
 
 	if(x->x_dimension == 0){
-		post("setup dimension first");
+		pd_error(x, "zirkhoa: setup dimension first");
 		return;
 	}
 	t_atom * args;
@@ -578,17 +578,17 @@ static void zirkhoa_getSpeakers(t_zirkhoa *x){
 static void zirkhoa_widening(t_zirkhoa *x, float widening){
 
 	if(x->x_dimension == 0){
-		post("setup dimension first");
+		pd_error(x, "zirkhoa: setup dimension first");
 		return;
 	}
 
 	if(x->x_dimension == 2){
 		if(!x->x_encoder2D){
-			post("setup order first");
+			pd_error(x, "zirkhoa: setup order first");
 	        return;
 		}
 		if(!x->x_decoder2D){
-			post("setup speakers first");
+			pd_error(x, "zirkhoa: setup speakers first");
 			return;
 		}
 		x->x_wider2D->setWidening(widening);
@@ -598,11 +598,11 @@ static void zirkhoa_widening(t_zirkhoa *x, float widening){
 
 	}else{
 		if(!x->x_encoder3D){
-			post("setup order first");
+			pd_error(x, "zirkhoa: setup order first");
 			return;
 		}
 		if(!x->x_decoder3D){
-			post("setup speakers first");
+			pd_error(x, "zirkhoa: setup speakers first");
 			return;
 		}
 		x->x_wider3D->setWidening(widening);
@@ -619,13 +619,13 @@ static void zirkhoa_getWidening(t_zirkhoa *x){
 	t_atom wideningAtom;
 	if(x->x_dimension == 2){
 		if(!x->x_encoder2D){
-			post("setup order first");
+			pd_error(x, "zirkhoa: setup order first");
 			return;
 		}
 	    SETFLOAT(&wideningAtom, (float)x->x_wider2D->getWidening());
 	}else{
 		if(!x->x_encoder3D){
-			post("setup order first");
+			pd_error(x, "zirkhoa: setup order first");
 			return;
 		}
 	    SETFLOAT(&wideningAtom, (float)x->x_wider3D->getWidening());
@@ -638,18 +638,18 @@ static void zirkhoa_getWidening(t_zirkhoa *x){
 static void zirkhoa_optim(t_zirkhoa *x, t_symbol* optim){
 
 	if(x->x_dimension == 0){
-		post("setup dimension first");
+		pd_error(x, "zirkhoa: setup dimension first");
 		return;
 	}
 
 	if(x->x_dimension == 2){
 		if(!x->x_encoder2D){
-			post("setup order first");
+			pd_error(x, "zirkhoa: setup order first");
 	        return;
 		}
 	}else{
 		if(!x->x_encoder3D){
-			post("setup order first");
+			pd_error(x, "zirkhoa: setup order first");
 			return;
 		}
 	}
@@ -662,7 +662,7 @@ static void zirkhoa_optim(t_zirkhoa *x, t_symbol* optim){
 	}else if(strcmp(modeName, "inphase") == 0){
 		x->x_optim = OPTIM_INPHASE;
 	}else{
-		post("no such optim mode %s. use basic, maxre or inphase.", modeName);
+		pd_error(x, "zirkhoa: no such optim mode %s, use basic, maxre or inphase", modeName);
 	}
 }
 
