@@ -597,7 +597,7 @@ static void zirkvbap_bang(t_zirkvbap *x)
 		//outlet_int(x->x_outlet4, x->x_gain); 
 	}
 	else
-		error("zirkvbap: Configure loudspeakers first!");
+		pd_error(x, "zirkvbap: Configure loudspeakers first!");
 
 	freebytes(final_gs, x->x_ls_amount * sizeof(t_float)); // bug fix added 9/00
 }
@@ -613,21 +613,21 @@ static void zirkvbap_matrix(t_zirkvbap *x, Symbol *s, int ac, Atom *av)
 		int d = 0;
  		/*if(av[datapointer].a_type == A_LONG) d = av[datapointer++].a_w.w_long;
 		else*/ if(av[datapointer].a_type == A_FLOAT) d = (long)av[datapointer++].a_w.w_float;
-		else { error("zirkvbap: Dimension NaN"); x->x_lsset_available=0; return; }
+		else { pd_error(x, "zirkvbap: Dimension NaN"); x->x_lsset_available=0; return; }
 
-		if (d!=2 && d!=3) { error("zirkvbap %s: Dimension can be only 2 or 3",s->s_name); x->x_lsset_available=0; return; }
+		if (d!=2 && d!=3) { pd_error(x, "zirkvbap %s: Dimension can be only 2 or 3",s->s_name); x->x_lsset_available=0; return; }
 
 		x->x_dimension = d;
 		x->x_lsset_available=1;
 	}
- 	else { error("zirkvbap %s: bad empty parameter list",s->s_name); x->x_lsset_available=0; return; }
+	else { pd_error(x, "zirkvbap %s: bad empty parameter list",s->s_name); x->x_lsset_available=0; return; }
 
 	if(ac>1) 
 	{
 		long a = 0;
  		/*if(av[datapointer].a_type == A_LONG) a = av[datapointer++].a_w.w_long;
 		else*/ if(av[datapointer].a_type == A_FLOAT) a = (long) av[datapointer++].a_w.w_float;
-		else { error("zirkvbap: ls_amount NaN");  x->x_lsset_available=0; return; }
+		else { pd_error(x, "zirkvbap: ls_amount NaN");  x->x_lsset_available=0; return; }
 
 		x->x_ls_amount = a;
 	}
@@ -635,7 +635,7 @@ static void zirkvbap_matrix(t_zirkvbap *x, Symbol *s, int ac, Atom *av)
 	long counter = (ac - 2) / ((x->x_dimension * x->x_dimension*2) + x->x_dimension);
  	x->x_lsset_amount=counter;
 
- 	if(counter==0) { error("zirkvbap %s: not enough parameters",s->s_name); x->x_lsset_available=0; return; }
+	if(counter==0) { pd_error(x, "zirkvbap %s: not enough parameters",s->s_name); x->x_lsset_available=0; return; }
  	
 	long setpointer=0;
 	long i;
@@ -649,13 +649,13 @@ static void zirkvbap_matrix(t_zirkvbap *x, Symbol *s, int ac, Atom *av)
 			{
                 x->x_lsset[setpointer][i]=(long)av[datapointer++].a_w.w_float;
  			}
- 			else { error("zirkvbap %s: param %d is not a float",s->s_name,datapointer); x->x_lsset_available=0; return; }
+			else { pd_error(x, "zirkvbap %s: param %d is not a float",s->s_name,datapointer); x->x_lsset_available=0; return; }
 # else /* Max */
  			if(av[datapointer].a_type == A_LONG)
 			{
  				 x->x_lsset[setpointer][i]=av[datapointer++].a_w.w_long;
  			}
- 			else { error("zirkvbap %s: param %d is not an in",s->s_name,datapointer); x->x_lsset_available=0; return; }
+			else { pd_error(x, "zirkvbap %s: param %d is not an in",s->s_name,datapointer); x->x_lsset_available=0; return; }
 # endif /* PD */
  		}	
  		for(i=0; i < x->x_dimension*x->x_dimension; i++)
@@ -664,7 +664,7 @@ static void zirkvbap_matrix(t_zirkvbap *x, Symbol *s, int ac, Atom *av)
 			{
  				x->x_set_inv_matx[setpointer][i]=av[datapointer++].a_w.w_float;
  			}
- 			else { error("zirkvbap %s: param %d is not a float",s->s_name,datapointer); x->x_lsset_available=0; return; }
+			else { pd_error(x, "zirkvbap %s: param %d is not a float",s->s_name,datapointer); x->x_lsset_available=0; return; }
  		}
  		
  		for(i=0; i < x->x_dimension*x->x_dimension; i++)
@@ -673,7 +673,7 @@ static void zirkvbap_matrix(t_zirkvbap *x, Symbol *s, int ac, Atom *av)
 			{
  				x->x_set_matx[setpointer][i]=av[datapointer++].a_w.w_float;
  			}
- 			else { error("zirkvbap %s: param %d is not a float",s->s_name,datapointer); x->x_lsset_available=0; return; }
+			else { pd_error(x, "zirkvbap %s: param %d is not a float",s->s_name,datapointer); x->x_lsset_available=0; return; }
  			
  		}
    	t_atom atoms[3];

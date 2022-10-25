@@ -212,7 +212,7 @@ static void *zirkhrtf_new(t_floatarg azimArg, t_floatarg elevArg){
             }
             fclose(fp) ;
         }else{
-        	post("zirkhrtf~ cannnot find file zirkhrtf_data.txt");
+        	pd_error(x, "zirkhrtf~ cannnot find file zirkhrtf_data.txt");
         	return NULL;
 		}
 
