@@ -56,6 +56,10 @@ Compile with:
 
     make
 
+To build for multiple architectures on macOS, set the `arch` and `extension` Makefile variables. For example, to build for 64 bit Intel and Apple Silicon:
+
+    make arch="x86_64 arm64" extension=d_fat
+
 Usage
 -----
 

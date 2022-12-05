@@ -42,6 +42,10 @@ Compile with:
 
 Each external will be built and the compiled object and it's help file will be copied into the main directory.
 
+On macOS, the externals are built for multiple architectures by default: 64 bit Intel (x86_64) and Apple Silicon (arm64). To override, set the `arch` Makefile variables:
+
+    make arch="x86_64 i386"
+
 To clean temporary build files but keep the compiled externals:
 
     make clean

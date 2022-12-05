@@ -25,7 +25,12 @@ Compile with:
 
     make
 
-Note: Currently, this external relies on an older version of the HoaLibrary-Light, namely the `HoaLibrary-v2.2` tag. It will not build with the main branch.
+
+To build for multiple architectures on macOS, set the `arch` and `extension` Makefile variables. For example, to build for 64 bit Intel and Apple Silicon:
+
+    make arch="x86_64 arm64" extension=d_fat
+
+_Note: Currently, this external relies on an older version of the HoaLibrary-Light, namely the `HoaLibrary-v2.2` tag. It will not build with the main branch._
 
 Usage
 -----
