@@ -10,7 +10,12 @@ EXTERN_DIR = externals
 UNAME = $(shell uname)
 ifeq ($(UNAME), Darwin)
   # Mac
-  EXTERN_EXT = d_fat
+  EXTERN_EXT = pd_darwin
+  arch ?= "x86_64 arm64"
+  ifneq ($(word 2, $(arch)),)
+    # multiple archs
+    EXTERN_EXT = d_fat
+  endif
 else ifeq ($(OS), Windows_NT)
   # Windows, use Mingw
   EXTERN_EXT = dll
@@ -49,7 +54,7 @@ $(EXTERN_DIR)/hoa/HoaLibrary-Light/ThirdParty:
 	cd $(EXTERN_DIR)/hoa && git submodule update --init --recursive
 
 zirkhoa.$(EXTERN_EXT):
-	make -C $(EXTERN_DIR)/hoa
+	make -C $(EXTERN_DIR)/hoa arch=$(arch) extension=$(EXTERN_EXT)
 	cp $(EXTERN_DIR)/hoa/$@ .
 	cp $(EXTERN_DIR)/hoa/*-help.pd .
 
@@ -64,7 +69,7 @@ hoa-clobber:
 hrtf: zirkhrtf~.$(EXTERN_EXT)
 
 zirkhrtf~.$(EXTERN_EXT):
-	make -C $(EXTERN_DIR)/hrtf
+	make -C $(EXTERN_DIR)/hrtf arch=$(arch) extension=$(EXTERN_EXT)
 	cp $(EXTERN_DIR)/hrtf/$@ .
 	cp $(EXTERN_DIR)/hrtf/*_data.txt .
 	cp $(EXTERN_DIR)/hrtf/*-help.pd .
@@ -80,7 +85,7 @@ hrtf-clobber:
 vbap: zirkvbap.$(EXTERN_EXT) define_loudspeakers.$(EXTERN_EXT)
 
 zirkvbap.$(EXTERN_EXT):
-	make -C $(EXTERN_DIR)/vbap
+	make -C $(EXTERN_DIR)/vbap arch=$(arch) extension=$(EXTERN_EXT)
 	cp $(EXTERN_DIR)/vbap/$@ .
 	cp $(EXTERN_DIR)/vbap/*-help.pd .
 

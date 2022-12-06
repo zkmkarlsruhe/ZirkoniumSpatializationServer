@@ -8,7 +8,6 @@ datafiles = define_loudspeakers.h max2pd.h zirkvbap.h \
             README.md $(wildcard *.pd)
 
 define forDarwin
-  make-multi-arch = yes
   cflags += -mmacosx-version-min=10.9
 endef
 

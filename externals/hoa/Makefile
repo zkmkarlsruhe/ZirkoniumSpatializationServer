@@ -12,7 +12,6 @@ suppress-wunused = yes
 
 define forDarwin
  cflags += -stdlib=libc++ -mmacosx-version-min=10.9
- make-multi-arch = yes
 endef
 
 PDLIBBUILDER_DIR=.
