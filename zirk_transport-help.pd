@@ -1,15 +1,15 @@
-#N canvas 620 153 657 491 10;
+#N canvas 916 170 657 491 10;
 #X obj 161 414 print;
 #X msg 61 63 start;
 #X msg 110 63 stop;
 #X msg 234 172 poll \$1;
-#X obj 234 148 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
-1;
-#X floatatom 271 213 5 0 0 0 - - -;
-#X floatatom 242 376 5 0 0 0 blocks - -;
+#X obj 234 148 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000
+#000000 0 1;
+#X floatatom 271 213 5 0 0 0 - - - 0;
+#X floatatom 242 376 5 0 0 0 blocks - - 0;
 #X msg 271 236 refresh \$1;
 #X msg 161 116 time \$1;
-#X floatatom 161 95 5 0 0 0 - - -;
+#X floatatom 161 95 5 0 0 0 - - - 0;
 #X text 414 294 set samplerate;
 #X text 283 376 number of pd sampleblocks per output event;
 #X msg 295 295 samplerate \$1;
@@ -23,8 +23,8 @@ audio block size and samplerate, f 83;
 #X text 255 148 enable update polling?;
 #X text 293 171 sends an "update" message instead of the calculated
 time;
-#X obj 33 63 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0 1
-;
+#X obj 33 63 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000 #000000
+0 1;
 #X obj 161 345 zirk_transport;
 #X text 149 65 run?;
 #X text 312 212 set refresh rate in fps \, default is 30;
