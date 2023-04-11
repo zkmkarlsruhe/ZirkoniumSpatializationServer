@@ -3,7 +3,7 @@
 #X obj 19 114 s #zirk-out;
 #X text 16 147 Zirkonium ZKM | Hertz-Labor 2021;
 #X text 16 13 wrapper for original zirkonium server patch;
-#X text 119 39 supports 32 channel sourcefiles;
-#X obj 19 83 zirk_server 64 64 64 64 32;
+#X text 119 39 supports 64 channel sourcefiles;
+#X obj 19 83 zirk_server 64 64 64 64 64;
 #X connect 0 0 5 0;
 #X connect 5 0 1 0;
